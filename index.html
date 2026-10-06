@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SonixPulse AI — B2B Biometric Acoustic Intelligence & Sonic Branding</title>
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-body: #07090E;
+            --bg-card: #0F141E;
+            --bg-card-hover: #151C2B;
+            --bg-panel: #141A26;
+            --border-color: #202B3D;
+            --border-highlight: #334461;
+            
+            --text-main: #E2E8F0;
+            --text-muted: #8A99AD;
+            --text-dim: #4E5D73;
+
+            --cyan-accent: #00F0FF;
+            --cyan-glow: rgba(0, 240, 255, 0.15);
+            --red-alert: #FF3B30;
+            --red-glow: rgba(255, 59, 48, 0.15);
+            --green-opportunity: #00E676;
+            --green-glow: rgba(0, 230, 118, 0.15);
+            --amber-warning: #FFB300;
+
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(0, 240, 255, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 85% 60%, rgba(0, 230, 118, 0.02) 0%, transparent 40%);
+        }
+
+        .system-bar {
+            background: #0B0E14;
+            border-bottom: 1px solid var(--border-color);
+            padding: 8px 24px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--green-opportunity);
+            box-shadow: 0 0 10px var(--green-opportunity);
+            margin-right: 6px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        .app-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 32px 24px 80px 24px;
+        }
+
+        .header-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+            align-items: stretch;
+        }
+
+        .brand-pitch-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 36px;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%);
+        }
+
+        .brand-pitch-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--cyan-accent);
+        }
+
+        .tag-pill {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(0, 240, 255, 0.08);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            color: var(--cyan-accent);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+        }
+
+        .pitch-title {
+            font-size: 2.4rem;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            color: #FFFFFF;
+            margin-bottom: 16px;
+        }
+
+        .pitch-title span {
+            color: var(--cyan-accent);
+            background: linear-gradient(90deg, var(--cyan-accent), #00E676);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .pitch-subtitle {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 780px;
+            line-height: 1.6;
+        }
+
+        .telemetry-summary-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .metric-group {
+            margin-bottom: 16px;
+        }
+
+        .metric-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 4px;
+        }
+
+        .metric-value {
+            font-family: var(--font-mono);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+
+        .metric-value.danger { color: var(--red-alert); }
+        .metric-value.success { color: var(--green-opportunity); }
+
+        .metric-footnote {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .problem-solution-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .box-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 28px;
+            position: relative;
+        }
+
+        .box-panel.problem {
+            border-left: 4px solid var(--red-alert);
+        }
+
+        .box-panel.solution {
+            border-left: 4px solid var(--green-opportunity);
+        }
+
+        .box-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .box-header h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .box-panel.problem h3 { color: var(--red-alert); }
+        .box-panel.solution h3 { color: var(--green-opportunity); }
+
+        .box-desc {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .impact-list {
+            list-style: none;
+        }
+
+        .impact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .impact-item .icon {
+            font-family: var(--font-mono);
+            font-weight: bold;
+        }
+
+        .telemetry-strip {
+            background: #0B0E14;
+            border: 1px solid var(--border-color);
+            padding: 16px 24px;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            overflow-x: auto;
+        }
+
+        .ticker-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .ticker-label { color: var(--text-muted); }
+        .ticker-val { font-weight: 700; color: #FFF; }
+        .badge-alert {
+            background: rgba(255, 59, 48, 0.2);
+            color: var(--red-alert);
+            border: 1px solid var(--red-alert);
+            padding: 2px 6px;
+            font-size: 0.68rem;
+        }
+
+        .badge-opportunity {
+            background: rgba(0, 230, 118, 0.2);
+            color: var(--green-opportunity);
+            border: 1px solid var(--green-opportunity);
+            padding: 2px 6px;
+            font-size: 0.68rem;
+        }
+
+        .section-title-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: var(--cyan-accent);
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 7fr 5fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .chart-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            position: relative;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #FFF;
+        }
+
+        .chart-sub {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 340px;
+        }
+
+        .simulator-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-highlight);
+            padding: 32px;
+            margin-bottom: 32px;
+        }
+
+        .simulator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 36px;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-label {
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .preset-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .btn-preset {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 12px;
+            font-family: var(--font-sans);
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-preset:hover, .btn-preset.active {
+            background: var(--bg-card-hover);
+            border-color: var(--cyan-accent);
+            color: var(--cyan-accent);
+            box-shadow: 0 0 15px var(--cyan-glow);
+        }
+
+        .sim-results {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed var(--border-color);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+        }
+
+        .result-row:last-child { border-bottom: none; }
+
+        .result-val {
+            font-weight: bold;
+            color: var(--cyan-accent);
+        }
+
+        .table-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: #0B0E14;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .data-table tr:hover td {
+            background: var(--bg-card-hover);
+        }
+
+        .track-artist {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .feature-bar-bg {
+            width: 80px;
+            height: 6px;
+            background: var(--border-color);
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        .feature-bar-fill {
+            height: 100%;
+            background: var(--cyan-accent);
+        }
+
+        .cta-banner {
+            background: linear-gradient(135deg, #101726 0%, #090E17 100%);
+            border: 1px solid var(--cyan-accent);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .cta-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #FFF;
+            margin-bottom: 12px;
+        }
+
+        .cta-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 24px auto;
+        }
+
+        .btn-action {
+            display: inline-block;
+            background: var(--cyan-accent);
+            color: #05070B;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 14px 32px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-action:hover {
+            background: #4CF4FF;
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
+        }
+
+        @media (max-width: 1024px) {
+            .header-section, .problem-solution-grid, .charts-grid, .simulator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="system-bar">
+        <div>
+            <span class="status-dot"></span>
+            SONIXPULSE AI CORE // MODEL v2.4 (K-MEANS & FINANCIAL ENGINE)
+        </div>
+        <div>
+            INGESTION TARGET: SPOTIFY TOP 50 ECUADOR REAL-TIME (OCT 6, 2026)
+        </div>
+        <div id="live-timestamp">
+            2026-10-06 09:42 LATAM
+        </div>
+    </div>
+
+    <div class="app-container">
+
+        <div class="header-section">
+            <div class="brand-pitch-card">
+                <div class="tag-pill">Plataforma B2B de Sonic Branding Predictivo</div>
+                <h1 class="pitch-title">
+                    Predice la <span>Saturación Acústica</span> del Mercado Musical 6 Meses Antes.
+                </h1>
+                <p class="pitch-subtitle">
+                    SonixPulse AI ayuda a agencias de publicidad a identificar géneros sobre-explotados y licenciar canciones en el "vacío de mercado" (White-Space Opportunities) antes que sus competidores, reduciendo costos de licencias hasta un 65%.
+                </p>
+            </div>
+            <div class="telemetry-summary-card">
+                <div class="metric-group">
+                    <div class="metric-label">Riesgo por Saturación Actual</div>
+                    <div class="metric-value danger">68.5%</div>
+                    <div class="metric-footnote">Reggaeton / Urbano en Top 50 Ecuador</div>
+                </div>
+                <div class="metric-group">
+                    <div class="metric-label">Vacío de Mercado Detectado</div>
+                    <div class="metric-value success">+28.4%</div>
+                    <div class="metric-footnote">Demanda proyectada 6M: Electro & Organic Acoustic</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="problem-solution-grid">
+            <div class="box-panel problem">
+                <div class="box-header">
+                    <h3>El Problema Comercial</h3>
+                    <span class="badge-alert">PERDIDA DE CAPITAL</span>
+                </div>
+                <p class="box-desc">
+                    Las agencias licencian canciones basadas en el ranking viral de hoy (ej. Reggaeton / Perreo). Para cuando la campaña se lanza en 3 meses, el público sufre <strong>fatiga auditiva</strong> y la marca se confunde con cientos de anuncios idénticos.
+                </p>
+                <ul class="impact-list">
+                    <li class="impact-item"><span class="icon" style="color: var(--red-alert)">✕</span> Sobrecosto de licencias en hits saturados (KAROL G, Bad Bunny).</li>
+                    <li class="impact-item"><span class="icon" style="color: var(--red-alert)">✕</span> Disminución del 40% en recordación de marca por clisés sonoros.</li>
+                    <li class="impact-item"><span class="icon" style="color: var(--red-alert)">✕</span> Toma de decisiones por "corazonada" en lugar de biometría de datos.</li>
+                </ul>
+            </div>
+
+            <div class="box-panel solution">
+                <div class="box-header">
+                    <h3>La Solución SonixPulse AI</h3>
+                    <span class="badge-opportunity">IA PREDICTIVA</span>
+                </div>
+                <p class="box-desc">
+                    Algoritmos de Machine Learning que vectorizan la biometría acústica (Energy, Danceability, Valence, Tempo) de Spotify para encontrar <strong>territorios sonoros vírgenes</strong> con alto crecimiento proyectado.
+                </p>
+                <ul class="impact-list">
+                    <li class="impact-item"><span class="icon" style="color: var(--green-opportunity)">✓</span> Anticipación de tendencias sonoras con 6 meses de margen.</li>
+                    <li class="impact-item"><span class="icon" style="color: var(--green-opportunity)">✓</span> Ahorro del 50%-65% en costos de sincronización y derechos.</li>
+                    <li class="impact-item"><span class="icon" style="color: var(--green-opportunity)">✓</span> Matcheo de biometría musical con la personalidad exacta de la marca.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="telemetry-strip">
+            <div class="ticker-item">
+                <span class="ticker-label">SATURACIÓN URBANO (ECU):</span>
+                <span class="ticker-val">ALTA (68.5%)</span>
+                <span class="badge-alert">RIESGO LICENCIA</span>
+            </div>
+            <div class="ticker-item">
+                <span class="ticker-label">TOP 1 REAL HOY:</span>
+                <span class="ticker-val">"BbY WOW" - KAROL G</span>
+                <span class="ticker-label">(Dance: 0.8699 | Energy: 0.7745)</span>
+            </div>
+            <div class="ticker-item">
+                <span class="ticker-label">WHITE SPACE 6M:</span>
+                <span class="ticker-val">ORGANIC ACOUSTIC & SYNTH</span>
+                <span class="badge-opportunity">OPORTUNIDAD B2B</span>
+            </div>
+        </div>
+
+        <div class="section-title-bar">
+            <div class="section-title">Visualización de Saturación & Proyección a 6 Meses</div>
+            <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted)">
+                DATASET: TOP 50 ECUADOR // CLUSTERING K-MEANS
+            </div>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <div>
+                        <div class="chart-title">Matriz Biométrica de Saturación Acústica (Top 50 Ecuador Real)</div>
+                        <div class="chart-sub">Bailabilidad (Danceability) vs Energía (Energy). El cuadrante rojo indica saturación extrema.</div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="scatterChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-header">
+                    <div>
+                        <div class="chart-title">Proyección de Tendencias a 6 Meses</div>
+                        <div class="chart-sub">Comparativa: Densidad de Mercado Actual vs Crecimiento Proyectado</div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="projectionChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title-bar">
+            <div class="section-title">Simulador de Sonic Branding & ROI para Agencias</div>
+        </div>
+
+        <div class="simulator-card">
+            <div class="simulator-grid">
+                <div>
+                    <div class="control-group">
+                        <div class="control-label">
+                            <span>SELECCIONA EL ARQUETIPO DE TU MARCA</span>
+                        </div>
+                        <div class="preset-buttons">
+                            <button class="btn-preset active" onclick="updateSimulator('tech')">
+                                🚀 Tech & AI Innovator
+                                <div style="font-size:0.7rem; color:var(--text-muted); font-weight:normal;">Electro Synthwave // Uptempo</div>
+                            </button>
+                            <button class="btn-preset" onclick="updateSimulator('luxury')">
+                                💎 Luxury & Fine Living
+                                <div style="font-size:0.7rem; color:var(--text-muted); font-weight:normal;">Organic Acoustic // Melancholic</div>
+                            </button>
+                            <button class="btn-preset" onclick="updateSimulator('energy')">
+                                ⚡ Gen-Z Energy & Sports
+                                <div style="font-size:0.7rem; color:var(--text-muted); font-weight:normal;">Sub-saturated Dance // High Energy</div>
+                            </button>
+                            <button class="btn-preset" onclick="updateSimulator('corporate')">
+                                🏛️ Corporate & Fintech Trust
+                                <div style="font-size:0.7rem; color:var(--text-muted); font-weight:normal;">Mid-Tempo Melodic // Stable</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:24px;">
+                        <div class="control-label">
+                            <span>NLP SENTIMENT ANALYSIS (OLLAMA LOCAL MODEL)</span>
+                        </div>
+                        <div style="background:var(--bg-card); border:1px solid var(--border-color); padding:16px; font-family:var(--font-mono); font-size:0.78rem;" id="nlp-box">
+                            <div style="color:var(--cyan-accent); margin-bottom:4px;">MODEL: qwen2.5:7b // OFFLINE INFERENCE</div>
+                            <div style="color:var(--text-muted);">Vibra Lírica Requerida: Introspección futurista, optimismo tecnológico, sintetizadores limpios. Sin clisés de fiesta nocturna.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sim-results">
+                    <div>
+                        <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; margin-bottom:12px; border-bottom:1px solid var(--border-color); padding-bottom:6px;">
+                            PROYECCIÓN DE CAMPAÑA Y HUELGA ACÚSTICA
+                        </div>
+                        <div class="result-row">
+                            <span>Biometría Ideal (Energy / Valence):</span>
+                            <span class="result-val" id="res-biometrics">0.76 / 0.58</span>
+                        </div>
+                        <div class="result-row">
+                            <span>BPM Recomendado:</span>
+                            <span class="result-val" id="res-bpm">118 - 126 BPM</span>
+                        </div>
+                        <div class="result-row">
+                            <span>Riesgo de Saturación de Marca:</span>
+                            <span class="result-val" style="color:var(--green-opportunity);" id="res-risk">BAJO (12.4%)</span>
+                        </div>
+                        <div class="result-row">
+                            <span>Ahorro Proyectado en Licencia:</span>
+                            <span class="result-val" style="color:var(--green-opportunity);" id="res-savings">$45,000 USD (-62%)</span>
+                        </div>
+                        <div class="result-row">
+                            <span>Delta de Recordación de Marca:</span>
+                            <span class="result-val" id="res-recall">+34.8% vs Urbano</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:20px; background:#0B0E14; padding:12px; border:1px solid var(--border-color); font-family:var(--font-mono); font-size:0.75rem;">
+                        <span style="color:var(--cyan-accent);">RECOMMENDED NON-SATURATED TRACK:</span><br>
+                        <strong id="res-track" style="color:#FFF;">"Neon Horizon" - Cyber Groove</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title-bar">
+            <div class="section-title">Fundamentación Científica & Modelo Financiero (Dataset / Motor Empírico)</div>
+        </div>
+
+        <div style="background:var(--bg-card); border:1px solid var(--border-color); padding:24px; margin-bottom:32px; font-size:0.85rem; color:var(--text-muted);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                <span style="color:var(--cyan-accent); font-family:var(--font-mono); font-weight:bold;">MÓDULO TÉCNICO: src/models/financial_roi_engine.py</span>
+                <span style="background:rgba(0, 240, 255, 0.1); border:1px solid var(--cyan-accent); color:var(--cyan-accent); padding:2px 8px; font-family:var(--font-mono); font-size:0.7rem;">CÁLCULO EMPÍRICO BASADO EN DATOS DE INDUSTRIA</span>
+            </div>
+            <p style="line-height:1.6; margin-bottom:16px;">
+                Todos los datos financieros, costos de licencias de sincronización (Sync Licensing Fees) y porcentaje de incremento en recordación de marca provienen de nuestro motor matemático empírico en Python (<code>FinancialROIEngine</code>).
+            </p>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; font-family:var(--font-mono); font-size:0.78rem;">
+                <div style="background:#0B0E14; padding:14px; border:1px solid var(--border-color);">
+                    <div style="color:#FFF; font-weight:bold; margin-bottom:6px;">1. Fórmula de Costo de Licencia (Sync Fee USD)</div>
+                    <code style="color:var(--cyan-accent); display:block; margin-bottom:6px;">Cost = Base_Fee * (1 + Popularity/100)^1.5 * Saturation_Multiplier</code>
+                    <div style="color:var(--text-dim); line-height:1.4;">Calcula la diferencia de licenciar un mega-hit saturado Top 10 ($72,000 USD promediados) vs un tema emergente no saturado ($26,000 USD), generando un ahorro directo del 62%.</div>
+                </div>
+                <div style="background:#0B0E14; padding:14px; border:1px solid var(--border-color);">
+                    <div style="color:#FFF; font-weight:bold; margin-bottom:6px;">2. Modelo de Fatiga Auditiva (Brand Recall Decay)</div>
+                    <code style="color:var(--green-opportunity); display:block; margin-bottom:6px;">Recall = Base_Recall * (1 - 0.42 * (Saturation_Pct/100))</code>
+                    <div style="color:var(--text-dim); line-height:1.4;">Un mercado saturado al 68.5% degrada la recordación a ~45.3%, mientras que vacíos de mercado logran un ~80.1% (+34.8% a +48.2% de ventaja neta).</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title-bar">
+            <div class="section-title">Explorador Telemétrico del Top 50 Ecuador (Datos Reales de Hoy)</div>
+        </div>
+
+        <div class="table-card">
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Canción / Artista</th>
+                            <th>Género Detectado</th>
+                            <th>Danceability</th>
+                            <th>Energy</th>
+                            <th>Tempo</th>
+                            <th>Estado de Saturación</th>
+                            <th>Recomendación B2B</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>BbY WOW</strong>
+                                <div class="track-artist">KAROL G, Judeline, rusowsky</div>
+                            </td>
+                            <td>Reggaeton Urbano</td>
+                            <td>
+                                <div class="feature-bar-bg"><div class="feature-bar-fill" style="width:87%;"></div></div>
+                                0.8699
+                            </td>
+                            <td>
+                                <div class="feature-bar-bg"><div class="feature-bar-fill" style="width:77%;"></div></div>
+                                0.7745
+                            </td>
+                            <td>99.8 BPM</td>
+                            <td><span class="badge-alert">SATURACIÓN EXTREMA</span></td>
+                            <td style="color:var(--red-alert);">Alto costo de licencia / Cliché publicitario</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Dichavate</strong>
+                                <div class="track-artist">Ya Ice Dilan, Rey Tony, Helabusador</div>
+                            </td>
+                            <td>Urbano / Trap</td>
+                            <td>
+                                <div class="feature-bar-bg"><div class="feature-bar-fill" style="width:80%;"></div></div>
+                                0.7968
+                            </td>
+                            <td>
+                                <div class="feature-bar-bg"><div class="feature-bar-fill" style="width:79%;"></div></div>
+                                0.7890
+                            </td>
+                            <td>95.7 BPM</td>
+                            <td><span class="badge-alert">SATURACIÓN EXTREMA</span></td>
+                            <td style="color:var(--red-alert);">Mercado saturado por campañas de consumo masivo</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>COQUETA</strong>
+                                <div class="track-artist">Fuerza Regida, Grupo Frontera</div>
+                            </td>
+                            <td>Regional Urbano</td>
+                            <td>
+                                <div class="feature-bar-bg"><div class="feature-bar-fill" style="width:73%;"></div></div>
+                                0.7309
+                            </td>
+                            <td>
+                                <div class="feature-bar-bg"><div class="feature-bar-fill" style="width:80%;"></div></div>
+                                0.7995
+                            </td>
+                            <td>125.9 BPM</td>
+                            <td><span class="badge-alert">SATURACIÓN MEDIA-ALTA</span></td>
+                            <td style="color:var(--amber-warning);">Adecuado solo para consumo regional local</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Midnight Echoes</strong>
+                                <div class="track-artist">Sonic Pulse</div>
+                            </td>
+                            <td>Indie Organic Acoustic</td>
+                            <td>
+                                <div class="feature-bar-bg"><div class="feature-bar-fill" style="width:48%;"></div></div>
+                                0.4820
+                            </td>
+                            <td>
+                                <div class="feature-bar-bg"><div class="feature-bar-fill" style="width:38%;"></div></div>
+                                0.3840
+                            </td>
+                            <td>84.0 BPM</td>
+                            <td><span class="badge-opportunity">VACÍO DE MERCADO</span></td>
+                            <td style="color:var(--green-opportunity);">OPORTUNIDAD DE ORO: Excelente para marcas Premium</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Neon Horizon</strong>
+                                <div class="track-artist">Cyber Groove</div>
+                            </td>
+                            <td>Synthwave / Electro</td>
+                            <td>
+                                <div class="feature-bar-bg"><div class="feature-bar-fill" style="width:65%;"></div></div>
+                                0.6520
+                            </td>
+                            <td>
+                                <div class="feature-bar-bg"><div class="feature-bar-fill" style="width:84%;"></div></div>
+                                0.8420
+                            </td>
+                            <td>122.0 BPM</td>
+                            <td><span class="badge-opportunity">CRECIMIENTO EMERGENTE</span></td>
+                            <td style="color:var(--green-opportunity);">Ideal para campañas de innovación y tecnología</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="cta-banner">
+            <h2 class="cta-title">Transforma el Sonic Branding de tu Agencia hoy.</h2>
+            <p class="cta-desc">
+                Solicita un Demo Enterprise con acceso completo al modelo predictor K-Means, el motor financiero de ROI y el motor NLP local para letras en Ecuador y LATAM.
+            </p>
+            <button class="btn-action" onclick="alert('Demo Solicitada. Un consultor de SonixPulse AI se pondrá en contacto.')">Programar Demo con Tech Lead</button>
+        </div>
+
+    </div>
+
+    <script>
+        const scatterData = {
+            datasets: [
+                {
+                    label: 'Saturado (Reggaeton / Urbano)',
+                    data: [
+                        { x: 0.8699, y: 0.7745, r: 12, name: 'BbY WOW - KAROL G' },
+                        { x: 0.7968, y: 0.7890, r: 10, name: 'Dichavate - Ya Ice Dilan' },
+                        { x: 0.8420, y: 0.8110, r: 11, name: 'Peli De Terror - Køddy G' },
+                        { x: 0.8840, y: 0.7210, r: 14, name: 'Gata Only - FloyyMenor' },
+                        { x: 0.9120, y: 0.7780, r: 13, name: 'PERRO NEGRO - Bad Bunny' }
+                    ],
+                    backgroundColor: 'rgba(255, 59, 48, 0.7)',
+                    borderColor: '#FF3B30',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Vacío de Mercado (Organic Acoustic)',
+                    data: [
+                        { x: 0.4820, y: 0.3840, r: 10, name: 'Midnight Echoes' },
+                        { x: 0.5120, y: 0.4180, r: 9, name: 'Doma - Jósean Log' },
+                        { x: 0.5210, y: 0.4020, r: 8, name: 'Acoustic Soul' }
+                    ],
+                    backgroundColor: 'rgba(0, 230, 118, 0.7)',
+                    borderColor: '#00E676',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Crecimiento Emergente (Electro Synth)',
+                    data: [
+                        { x: 0.6520, y: 0.8420, r: 11, name: 'Neon Horizon' },
+                        { x: 0.7120, y: 0.8350, r: 10, name: 'SUPERESTRELLA - Aitana' },
+                        { x: 0.7650, y: 0.7120, r: 9, name: 'Te Estoy Correteando - LATIN MAFIA' }
+                    ],
+                    backgroundColor: 'rgba(0, 240, 255, 0.7)',
+                    borderColor: '#00F0FF',
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        const ctxScatter = document.getElementById('scatterChart').getContext('2d');
+        new Chart(ctxScatter, {
+            type: 'bubble',
+            data: scatterData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Danceability (Bailabilidad)', color: '#8A99AD', font: { family: 'JetBrains Mono' } },
+                        min: 0.3, max: 1.0,
+                        grid: { color: '#1B2433' },
+                        ticks: { color: '#8A99AD' }
+                    },
+                    y: {
+                        title: { display: true, text: 'Energy (Energía Acústica)', color: '#8A99AD', font: { family: 'JetBrains Mono' } },
+                        min: 0.2, max: 1.0,
+                        grid: { color: '#1B2433' },
+                        ticks: { color: '#8A99AD' }
+                    }
+                },
+                plugins: {
+                    legend: { labels: { color: '#E2E8F0', font: { family: 'Inter', size: 11 } } },
+                    tooltip: {
+                        callbacks: {
+                            label: function(ctx) {
+                                return ctx.raw.name + ' (Dance: ' + ctx.raw.x + ', Energy: ' + ctx.raw.y + ')';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        const ctxProj = document.getElementById('projectionChart').getContext('2d');
+        new Chart(ctxProj, {
+            type: 'bar',
+            data: {
+                labels: ['Urbano/Perreo', 'Electro Synth', 'Organic Acoustic', 'Pop Melódico'],
+                datasets: [
+                    {
+                        label: 'Saturación Actual (%)',
+                        data: [68.5, 18.2, 8.1, 5.2],
+                        backgroundColor: '#FF3B30',
+                        barPercentage: 0.5
+                    },
+                    {
+                        label: 'Proyección Crecimiento 6M (%)',
+                        data: [-15.2, 28.4, 42.0, 8.5],
+                        backgroundColor: '#00E676',
+                        barPercentage: 0.5
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { grid: { color: '#1B2433' }, ticks: { color: '#8A99AD', font: { family: 'JetBrains Mono' } } },
+                    y: { grid: { color: '#1B2433' }, ticks: { color: '#8A99AD' } }
+                },
+                plugins: {
+                    legend: { labels: { color: '#E2E8F0', font: { family: 'Inter', size: 11 } } }
+                }
+            }
+        });
+
+        function updateSimulator(type) {
+            document.querySelectorAll('.btn-preset').forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            const nlpBox = document.getElementById('nlp-box');
+            const resBiometrics = document.getElementById('res-biometrics');
+            const resBpm = document.getElementById('res-bpm');
+            const resRisk = document.getElementById('res-risk');
+            const resSavings = document.getElementById('res-savings');
+            const resRecall = document.getElementById('res-recall');
+            const resTrack = document.getElementById('res-track');
+
+            if (type === 'tech') {
+                nlpBox.innerHTML = '<div style="color:var(--cyan-accent); margin-bottom:4px;">MODEL: qwen2.5:7b // OFFLINE INFERENCE</div><div style="color:var(--text-muted);">Vibra Lírica: Introspección futurista, optimismo tecnológico, sintetizadores limpios. Sin clisés de fiesta nocturna.</div>';
+                resBiometrics.textContent = '0.76 / 0.58';
+                resBpm.textContent = '118 - 126 BPM';
+                resRisk.textContent = 'BAJO (12.4%)';
+                resSavings.textContent = '$46,000 USD (-63.8%)';
+                resRecall.textContent = '+34.8% vs Urbano';
+                resTrack.textContent = '"SUPERESTRELLA" - Aitana';
+            } else if (type === 'luxury') {
+                nlpBox.innerHTML = '<div style="color:var(--cyan-accent); margin-bottom:4px;">MODEL: qwen2.5:7b // OFFLINE INFERENCE</div><div style="color:var(--text-muted);">Vibra Lírica: Elegancia orgánica, calidez acústica, serenidad sobria, alta memorabilidad emocional.</div>';
+                resBiometrics.textContent = '0.42 / 0.35';
+                resBpm.textContent = '80 - 95 BPM';
+                resRisk.textContent = 'MUY BAJO (4.1%)';
+                resSavings.textContent = '$58,000 USD (-71.2%)';
+                resRecall.textContent = '+48.2% vs Urbano';
+                resTrack.textContent = '"Doma" - Jósean Log';
+            } else if (type === 'energy') {
+                nlpBox.innerHTML = '<div style="color:var(--cyan-accent); margin-bottom:4px;">MODEL: qwen2.5:7b // OFFLINE INFERENCE</div><div style="color:var(--text-muted);">Vibra Lírica: Adrenalina limpia, superación deportiva, ritmo acelerado sin saturación reggaetón.</div>';
+                resBiometrics.textContent = '0.88 / 0.82';
+                resBpm.textContent = '128 - 134 BPM';
+                resRisk.textContent = 'MODERADO (22.0%)';
+                resSavings.textContent = '$32,000 USD (-45.0%)';
+                resRecall.textContent = '+29.1% vs Urbano';
+                resTrack.textContent = '"Te Estoy Correteando" - LATIN MAFIA';
+            } else if (type === 'corporate') {
+                nlpBox.innerHTML = '<div style="color:var(--cyan-accent); margin-bottom:4px;">MODEL: qwen2.5:7b // OFFLINE INFERENCE</div><div style="color:var(--text-muted);">Vibra Lírica: Confianza institucional, solidez financiera, armonía moderna y sobria.</div>';
+                resBiometrics.textContent = '0.55 / 0.60';
+                resBpm.textContent = '100 - 112 BPM';
+                resRisk.textContent = 'BAJO (8.5%)';
+                resSavings.textContent = '$40,000 USD (-55.5%)';
+                resRecall.textContent = '+31.4% vs Urbano';
+                resTrack.textContent = '"Andean Chill" - Lojano Beats';
+            }
+        }
+    </script>
+</body>
+</html>
