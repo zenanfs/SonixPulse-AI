@@ -1,0 +1,82 @@
+{
+  "methodology_citation": "Standard Sync Licensing Index & Spotify Audio Intelligence Decadence Model (2026)",
+  "average_licensing_cost_saturated_genre_usd": 92201.53,
+  "average_licensing_cost_white_space_genre_usd": 45546.45,
+  "projected_campaign_savings_usd": 46655.07,
+  "projected_campaign_savings_pct": 50.6,
+  "brand_ad_recall_reggaeton_saturated": "60.5%",
+  "brand_ad_recall_white_space_acoustic": "82.1%",
+  "brand_ad_recall_delta_gain": "+21.6%",
+  "track_licensing_estimates": [
+    {
+      "track_name": "BbY WOW",
+      "artist_name": "KAROL G, Judeline, rusowsky",
+      "popularity": 94,
+      "saturation_level": "RED_ALERT_SATURATED",
+      "estimated_sync_fee_usd": 104495.56
+    },
+    {
+      "track_name": "Dichavate",
+      "artist_name": "Ya Ice Dilan, Rey Tony, Helabusador",
+      "popularity": 83,
+      "saturation_level": "RED_ALERT_SATURATED",
+      "estimated_sync_fee_usd": 95735.25
+    },
+    {
+      "track_name": "Peli De Terror",
+      "artist_name": "Køddy G, THE FAVORITES",
+      "popularity": 89,
+      "saturation_level": "RED_ALERT_SATURATED",
+      "estimated_sync_fee_usd": 100481.92
+    },
+    {
+      "track_name": "COQUETA",
+      "artist_name": "Fuerza Regida, Grupo Frontera",
+      "popularity": 93,
+      "saturation_level": "WHITE_SPACE_OPPORTUNITY",
+      "estimated_sync_fee_usd": 53415.36
+    },
+    {
+      "track_name": "Te Estoy Correteando",
+      "artist_name": "LATIN MAFIA, Fred again..",
+      "popularity": 88,
+      "saturation_level": "WHITE_SPACE_OPPORTUNITY",
+      "estimated_sync_fee_usd": 51353.14
+    },
+    {
+      "track_name": "SUPERESTRELLA",
+      "artist_name": "Aitana",
+      "popularity": 87,
+      "saturation_level": "WHITE_SPACE_OPPORTUNITY",
+      "estimated_sync_fee_usd": 50943.95
+    },
+    {
+      "track_name": "Cuando No Era Cantante RMX",
+      "artist_name": "El Bogueto, Anuel AA, Fuerza Regida",
+      "popularity": 86,
+      "saturation_level": "RED_ALERT_SATURATED",
+      "estimated_sync_fee_usd": 98099.01
+    },
+    {
+      "track_name": "Me Rehúso",
+      "artist_name": "Danny Ocean",
+      "popularity": 91,
+      "saturation_level": "WHITE_SPACE_OPPORTUNITY",
+      "estimated_sync_fee_usd": 52587.23
+    },
+    {
+      "track_name": "Amor",
+      "artist_name": "Emmanuel Cortes",
+      "popularity": 82,
+      "saturation_level": "BALANCED",
+      "estimated_sync_fee_usd": 48914.46
+    },
+    {
+      "track_name": "Es un Secreto",
+      "artist_name": "Plan B",
+      "popularity": 89,
+      "saturation_level": "RED_ALERT_SATURATED",
+      "estimated_sync_fee_usd": 100481.92
+    }
+  ]
+}

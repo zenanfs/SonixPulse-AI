@@ -1,0 +1,22 @@
+# Entornos virtuales
+venv/
+env/
+ENV/
+.venv/
+
+# Archivos de caché de Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Variables de entorno con credenciales secretas
+.env
+!.env.example
+
+# Datos temporales
+*.log
+.DS_Store
+
+# Archivos de compilación o modelos pesados temporales
+*.pkl

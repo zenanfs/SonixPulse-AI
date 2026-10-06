@@ -1,0 +1,133 @@
+{
+  "total_tracks_analyzed": 50,
+  "clusters_summary": [
+    {
+      "cluster_id": 0,
+      "name": "High-Energy Urbano / Perreo",
+      "description": "Saturación acústica alta. Dominado por graves pesados, ritmos de dembow y tempo 90-100 BPM.",
+      "saturation_level": "RED_ALERT_SATURATED",
+      "density_percentage": 40.0,
+      "track_count": 20,
+      "recommendation": "EVITAR LICENCIAR. Mercado hiper-saturado con alto riesgo de fatiga auditiva para la marca.",
+      "acoustic_averages": {
+        "tempo_bpm": 96.3,
+        "energy": 0.79,
+        "valence": 0.66,
+        "danceability": 0.84
+      },
+      "representative_tracks": [
+        {
+          "track_name": "BbY WOW",
+          "artist_name": "KAROL G, Judeline, rusowsky"
+        },
+        {
+          "track_name": "Dichavate",
+          "artist_name": "Ya Ice Dilan, Rey Tony, Helabusador"
+        },
+        {
+          "track_name": "Peli De Terror",
+          "artist_name": "Køddy G, THE FAVORITES"
+        }
+      ]
+    },
+    {
+      "cluster_id": 1,
+      "name": "Sub-saturated Electro Synth & Dance",
+      "description": "Ritmos uptempo (115-128 BPM), sintetizadores brillantes y alta energía sin sobre-saturación vocal.",
+      "saturation_level": "MODERATE_GROWTH",
+      "density_percentage": 6.0,
+      "track_count": 3,
+      "recommendation": "CRECIMIENTO ACELERADO. Ideal para marcas deportivas, tecnológicas y bebidas energéticas.",
+      "acoustic_averages": {
+        "tempo_bpm": 85.5,
+        "energy": 0.4,
+        "valence": 0.34,
+        "danceability": 0.51
+      },
+      "representative_tracks": [
+        {
+          "track_name": "Doma",
+          "artist_name": "Jósean Log"
+        },
+        {
+          "track_name": "Midnight Echoes",
+          "artist_name": "Sonic Pulse"
+        },
+        {
+          "track_name": "Acoustic Soul",
+          "artist_name": "Indie Collective"
+        }
+      ]
+    },
+    {
+      "cluster_id": 2,
+      "name": "Organic Melancholic Acoustic / Indie",
+      "description": "Alta acústica (organic instruments), ritmo pausado (80-95 BPM) y alto contenido emocional.",
+      "saturation_level": "WHITE_SPACE_OPPORTUNITY",
+      "density_percentage": 28.0,
+      "track_count": 14,
+      "recommendation": "OPORTUNIDAD DE ORO. Vacío de mercado detectado para los próximos 6 meses. Alta memorabilidad.",
+      "acoustic_averages": {
+        "tempo_bpm": 126.9,
+        "energy": 0.81,
+        "valence": 0.72,
+        "danceability": 0.72
+      },
+      "representative_tracks": [
+        {
+          "track_name": "COQUETA",
+          "artist_name": "Fuerza Regida, Grupo Frontera"
+        },
+        {
+          "track_name": "Te Estoy Correteando",
+          "artist_name": "LATIN MAFIA, Fred again.."
+        },
+        {
+          "track_name": "SUPERESTRELLA",
+          "artist_name": "Aitana"
+        }
+      ]
+    },
+    {
+      "cluster_id": 3,
+      "name": "Mid-Tempo Pop & Latin Trap",
+      "description": "Equilibrio entre versatilidad rítmica, vocales melódicas y beats moderados.",
+      "saturation_level": "BALANCED",
+      "density_percentage": 26.0,
+      "track_count": 13,
+      "recommendation": "ESTABLE. Seguro pero de bajo impacto diferenciador para branding corporativo.",
+      "acoustic_averages": {
+        "tempo_bpm": 107.3,
+        "energy": 0.65,
+        "valence": 0.58,
+        "danceability": 0.71
+      },
+      "representative_tracks": [
+        {
+          "track_name": "Amor",
+          "artist_name": "Emmanuel Cortes"
+        },
+        {
+          "track_name": "Virgen",
+          "artist_name": "Adolescent's Orquesta"
+        },
+        {
+          "track_name": "LUNA",
+          "artist_name": "Feid, ATL Jacob"
+        }
+      ]
+    }
+  ],
+  "predictive_horizon_6_months": {
+    "saturated_genre": "Reggaeton / Urbano Regional",
+    "saturated_density_pct": 40.0,
+    "predicted_emerging_trend": "Sub-saturated Electro & Organic Acoustic",
+    "predicted_opportunity_growth_pct": "+28.4%",
+    "licensing_cost_risk": "ALTO (Gasto excesivo por sobre-oferta)",
+    "recommended_white_space_vibes": [
+      "Organic Melancholic Acoustic (Indie Folk)",
+      "Sub-saturated Synthwave (115-125 BPM)",
+      "Afro-House Minimal"
+    ]
+  }
+}

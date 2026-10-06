@@ -1,0 +1,51 @@
+track_id,track_name,artist_name,album_name,popularity,duration_ms,danceability,energy,key,loudness,mode,speechiness,acousticness,instrumentalness,liveness,valence,tempo,genre_label
+ecu_live2026_001,BbY WOW,"KAROL G, Judeline, rusowsky","Album KAROL G, Judeline, rusowsky",94,195000,0.8699,0.7745,5,-5.8,1,0.22,0.12,0.005,0.12,0.6759,99.8,Urbano / Reggaeton
+ecu_live2026_002,Dichavate,"Ya Ice Dilan, Rey Tony, Helabusador","Album Ya Ice Dilan, Rey Tony, Helabusador",83,195000,0.7968,0.789,5,-5.8,1,0.19,0.08,0.005,0.12,0.5571,95.7,Urbano / Trap
+ecu_live2026_003,Peli De Terror,"Køddy G, THE FAVORITES","Album Køddy G, THE FAVORITES",89,195000,0.842,0.811,5,-5.8,1,0.14,0.05,0.005,0.12,0.612,97.2,Urbano / Reggaeton
+ecu_live2026_004,COQUETA,"Fuerza Regida, Grupo Frontera","Album Fuerza Regida, Grupo Frontera",93,195000,0.7309,0.7995,5,-5.8,1,0.07,0.25,0.005,0.12,0.819,125.9,Regional Urbano
+ecu_live2026_005,Te Estoy Correteando,"LATIN MAFIA, Fred again..","Album LATIN MAFIA, Fred again..",88,195000,0.765,0.712,5,-5.8,1,0.06,0.18,0.005,0.12,0.684,118.5,Sub-saturated Electro / Pop
+ecu_live2026_006,SUPERESTRELLA,Aitana,Album Aitana,87,195000,0.712,0.835,5,-5.8,1,0.05,0.04,0.005,0.12,0.741,122.0,Sub-saturated Electro Synth
+ecu_live2026_007,Cuando No Era Cantante RMX,"El Bogueto, Anuel AA, Fuerza Regida","Album El Bogueto, Anuel AA, Fuerza Regida",86,195000,0.815,0.795,5,-5.8,1,0.21,0.09,0.005,0.12,0.589,96.5,Urbano / Mexa Trap
+ecu_live2026_008,Me Rehúso,Danny Ocean,Album Danny Ocean,91,195000,0.744,0.804,5,-5.8,1,0.07,0.02,0.005,0.12,0.726,104.8,Latin Pop / Classic
+ecu_live2026_009,Amor,Emmanuel Cortes,Album Emmanuel Cortes,82,195000,0.684,0.621,5,-5.8,1,0.04,0.38,0.005,0.12,0.542,112.0,Regional Melódico
+ecu_live2026_010,Es un Secreto,Plan B,Album Plan B,89,195000,0.831,0.864,5,-5.8,1,0.11,0.06,0.005,0.12,0.815,96.0,Classic Reggaeton
+ecu_live2026_011,Virgen,Adolescent's Orquesta,Album Adolescent's Orquesta,84,195000,0.692,0.741,5,-5.8,1,0.05,0.42,0.005,0.12,0.834,94.5,Salsa Tropical / Mid-Tempo
+ecu_live2026_012,LUNA,"Feid, ATL Jacob","Album Feid, ATL Jacob",92,195000,0.731,0.708,5,-5.8,1,0.06,0.23,0.005,0.12,0.442,98.0,Urbano Pop
+ecu_live2026_013,Doma,Jósean Log,Album Jósean Log,79,195000,0.512,0.418,5,-5.8,1,0.04,0.74,0.005,0.12,0.385,84.5,Organic Acoustic / Indie
+ecu_live2026_014,Tu Boda,"Oscar Maydon, Fuerza Regida","Album Oscar Maydon, Fuerza Regida",87,195000,0.758,0.732,5,-5.8,1,0.06,0.29,0.005,0.12,0.618,121.0,Regional Urbano
+ecu_live2026_015,Tiroteo - Remix,"Marc Seguí, Rauw Alejandro, Pol Granch","Album Marc Seguí, Rauw Alejandro, Pol Granch",88,195000,0.689,0.668,5,-5.8,1,0.05,0.31,0.005,0.12,0.512,108.0,Indie Pop / Urbano
+ecu_live2026_016,Candy,Plan B,Album Plan B,85,195000,0.845,0.881,5,-5.8,1,0.16,0.04,0.005,0.12,0.792,96.0,Classic Reggaeton
+ecu_live2026_017,KOKO,Omar Courtz,Album Omar Courtz,84,195000,0.785,0.754,5,-5.8,1,0.08,0.11,0.005,0.12,0.589,97.5,Urbano / Trap
+ecu_live2026_018,Dardos,"Romeo Santos, Prince Royce","Album Romeo Santos, Prince Royce",83,195000,0.724,0.612,5,-5.8,1,0.04,0.36,0.005,0.12,0.704,124.0,Bachata / Romantic
+ecu_live2026_019,Borro Cassette,Maluma,Album Maluma,86,195000,0.812,0.825,5,-5.8,1,0.09,0.07,0.005,0.12,0.764,94.0,Classic Urbano
+ecu_live2026_020,SWIM,BTS,Album BTS,90,195000,0.678,0.812,5,-5.8,1,0.05,0.03,0.005,0.12,0.645,120.0,K-Pop Synthwave
+ecu_live2026_021,BAILE INoLVIDABLE,Bad Bunny,Album Bad Bunny,93,195000,0.892,0.784,5,-5.8,1,0.24,0.05,0.005,0.12,0.712,95.0,Reggaeton / Perreo
+ecu_live2026_022,El Telefono,"Héctor ""El Father"", Wisin & Yandel","Album Héctor ""El Father"", Wisin & Yandel",82,195000,0.824,0.895,5,-5.8,1,0.19,0.03,0.005,0.12,0.784,95.5,Classic Reggaeton
+ecu_live2026_023,capaz (merengueton),"Alleh, Yorghaki","Album Alleh, Yorghaki",85,195000,0.835,0.862,5,-5.8,1,0.08,0.14,0.005,0.12,0.912,128.0,Merengue Urbano
+ecu_live2026_024,El Perdedor,Aventura,Album Aventura,87,195000,0.698,0.584,5,-5.8,1,0.03,0.44,0.005,0.12,0.642,125.0,Bachata Classic
+ecu_live2026_025,El Fin del Mundo,"La La Love You, Axolotes Mexicanos","Album La La Love You, Axolotes Mexicanos",81,195000,0.582,0.912,5,-5.8,1,0.06,0.01,0.005,0.12,0.785,142.0,Sub-saturated Pop Punk
+ecu_live2026_026,Diles,"Bad Bunny, Ozuna, Farruko, Arcángel","Album Bad Bunny, Ozuna, Farruko, Arcángel",88,195000,0.764,0.712,5,-5.8,1,0.15,0.12,0.005,0.12,0.495,96.0,Latin Trap Classic
+ecu_live2026_027,Para No Verte Más,La Mosca,Album La Mosca,80,195000,0.715,0.842,5,-5.8,1,0.04,0.18,0.005,0.12,0.892,126.0,Latin Ska Pop
+ecu_live2026_028,COMPA COLETO (uy_como),ARIA VEGA,Album ARIA VEGA,78,195000,0.841,0.792,5,-5.8,1,0.17,0.08,0.005,0.12,0.634,98.0,Urbano Emergente
+ecu_live2026_029,EoO,Bad Bunny,Album Bad Bunny,91,195000,0.905,0.768,5,-5.8,1,0.22,0.04,0.005,0.12,0.672,95.0,Urbano / Dembow
+ecu_live2026_030,Las Muñequitas,"Mr Plata, El Americano 4KT","Album Mr Plata, El Americano 4KT",79,195000,0.812,0.745,5,-5.8,1,0.18,0.1,0.005,0.12,0.518,94.0,Urbano / Trap
+ecu_live2026_031,neo roneo,"rusowsky, LATIN MAFIA","Album rusowsky, LATIN MAFIA",82,195000,0.612,0.542,5,-5.8,1,0.04,0.52,0.005,0.12,0.485,110.0,Organic Synth Indie
+ecu_live2026_032,Si Antes Te Hubiera Conocido,KAROL G,Album KAROL G,94,195000,0.841,0.892,5,-5.8,1,0.09,0.18,0.005,0.12,0.932,128.0,Merengue Urbano
+ecu_live2026_033,POR SI MAÑANA NO ESTOY,Omar Courtz,Album Omar Courtz,83,195000,0.725,0.684,5,-5.8,1,0.06,0.21,0.005,0.12,0.458,98.0,Urbano Melódico
+ecu_live2026_034,Solos,"Tony Dize, Plan B","Album Tony Dize, Plan B",84,195000,0.795,0.842,5,-5.8,1,0.12,0.05,0.005,0.12,0.758,95.0,Classic Reggaeton
+ecu_live2026_035,De Lejitos - Remix,"Jay Wheeler, Omar Courtz","Album Jay Wheeler, Omar Courtz",82,195000,0.742,0.695,5,-5.8,1,0.07,0.19,0.005,0.12,0.524,96.0,Urbano Romántico
+ecu_live2026_036,Cuando No Era Cantante,"El Bogueto, Yung Beef","Album El Bogueto, Yung Beef",85,195000,0.821,0.785,5,-5.8,1,0.19,0.08,0.005,0.12,0.562,96.0,Mexa Trap
+ecu_live2026_037,LA CANCIÓN,"J Balvin, Bad Bunny","Album J Balvin, Bad Bunny",92,195000,0.754,0.648,5,-5.8,1,0.25,0.22,0.005,0.12,0.428,176.0,Latin Melodic Classic
+ecu_live2026_038,EXCESOS,Fuerza Regida,Album Fuerza Regida,83,195000,0.718,0.762,5,-5.8,1,0.06,0.31,0.005,0.12,0.694,122.0,Regional Urbano
+ecu_live2026_039,UNA BABY EN SANTIAGO,Lil Naay,Album Lil Naay,80,195000,0.862,0.742,5,-5.8,1,0.14,0.11,0.005,0.12,0.684,98.0,Reggaeton Chileno
+ecu_live2026_040,Gata Only,"FloyyMenor, Cris Mj","Album FloyyMenor, Cris Mj",95,195000,0.884,0.721,5,-5.8,1,0.05,0.15,0.005,0.12,0.692,99.0,Reggaeton Chileno
+ecu_live2026_041,REAL GANGSTA LOVE,Trueno,Album Trueno,87,195000,0.762,0.684,5,-5.8,1,0.14,0.31,0.005,0.12,0.551,94.0,Latin Hip-Hop
+ecu_live2026_042,UN PREVIEW,Bad Bunny,Album Bad Bunny,91,195000,0.792,0.812,5,-5.8,1,0.08,0.04,0.005,0.12,0.612,95.0,Reggaeton
+ecu_live2026_043,PERRO NEGRO,"Bad Bunny, Feid","Album Bad Bunny, Feid",93,195000,0.912,0.778,5,-5.8,1,0.28,0.06,0.005,0.12,0.742,96.0,Perreo
+ecu_live2026_044,Santa,"Rvssian, Rauw Alejandro, Ayra Starr","Album Rvssian, Rauw Alejandro, Ayra Starr",86,195000,0.814,0.662,5,-5.8,1,0.05,0.28,0.005,0.12,0.602,103.0,Afro-Reggaeton
+ecu_live2026_045,Espressocito,Sabrina Carpenter (Remix),Album Sabrina Carpenter (Remix),84,195000,0.702,0.764,5,-5.8,1,0.04,0.11,0.005,0.12,0.772,117.0,Synth Pop
+ecu_live2026_046,Midnight Echoes,Sonic Pulse,Album Sonic Pulse,62,195000,0.482,0.384,5,-5.8,1,0.03,0.78,0.005,0.12,0.292,84.0,Organic Acoustic / Indie
+ecu_live2026_047,Neon Horizon,Cyber Groove,Album Cyber Groove,68,195000,0.652,0.842,5,-5.8,1,0.05,0.02,0.005,0.12,0.512,122.0,Sub-saturated Synthwave
+ecu_live2026_048,Andean Chill,Lojano Beats,Album Lojano Beats,59,195000,0.621,0.554,5,-5.8,1,0.04,0.54,0.005,0.12,0.684,112.0,Organic Folklore House
+ecu_live2026_049,Acoustic Soul,Indie Collective,Album Indie Collective,55,195000,0.521,0.402,5,-5.8,1,0.03,0.82,0.005,0.12,0.354,88.0,Organic Acoustic
+ecu_live2026_050,Cyber Pulse,Electro Waves,Album Electro Waves,60,195000,0.624,0.884,5,-5.8,1,0.05,0.03,0.005,0.12,0.582,124.0,Sub-saturated Electro

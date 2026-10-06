@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  trendscout-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: trendscout_api_server
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - OLLAMA_HOST=http://host.docker.internal:11434
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+
+  trendscout-web:
+    image: nginx:alpine
+    container_name: trendscout_web_frontend
+    ports:
+      - "8080:80"
+    volumes:
+      - ./web:/usr/share/nginx/html:ro
+    depends_on:
+      - trendscout-api
+    restart: unless-stopped
