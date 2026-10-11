@@ -16,7 +16,7 @@ from typing import Dict, Any, Optional
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] [%(levelname)s] %(message)s')
 logger = logging.getLogger("SonixPulse.API")
 
-# Añadir el directorio raíz al path de Python
+# Añadir el directorio raíz del proyecto al path de Python
 sys.path.append(str(Path(__file__).resolve().parent.parent.parent))
 
 try:
