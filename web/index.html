@@ -3,36 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SonixPulse AI — B2B Biometric Acoustic Intelligence & Sonic Branding</title>
+    <title>SonixPulse AI — Consola Científica de Predicción de Viralidad Multimodal (P90)</title>
     <!-- Google Fonts: Inter & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --bg-body: #07090E;
-            --bg-card: #0F141E;
-            --bg-card-hover: #151C2B;
-            --bg-panel: #141A26;
-            --border-color: #202B3D;
-            --border-highlight: #334461;
-            
-            --text-main: #E2E8F0;
-            --text-muted: #8A99AD;
-            --text-dim: #4E5D73;
+            --bg-base: #06090e;
+            --bg-surface: #0c121c;
+            --bg-card: #121a28;
+            --bg-card-hover: #182336;
+            --border-dim: #1d2a3d;
+            --border-glow: #2a3c57;
 
-            --cyan-accent: #00F0FF;
-            --cyan-glow: rgba(0, 240, 255, 0.15);
-            --red-alert: #FF3B30;
-            --red-glow: rgba(255, 59, 48, 0.15);
-            --green-opportunity: #00E676;
-            --green-glow: rgba(0, 230, 118, 0.15);
-            --amber-warning: #FFB300;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
 
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
+            --accent-cyan: #06b6d4;
+            --accent-cyan-glow: rgba(6, 182, 212, 0.2);
+            --accent-emerald: #10b981;
+            --accent-emerald-glow: rgba(16, 185, 129, 0.2);
+            --accent-rose: #f43f5e;
+            --accent-rose-glow: rgba(244, 63, 94, 0.2);
+            --accent-amber: #f59e0b;
+            --accent-amber-glow: rgba(245, 158, 11, 0.2);
+            --accent-indigo: #6366f1;
+
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
         }
 
         * {
@@ -42,1415 +44,1208 @@
         }
 
         body {
-            background-color: var(--bg-body);
+            background-color: var(--bg-base);
             color: var(--text-main);
             font-family: var(--font-sans);
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
             background-image: 
-                radial-gradient(circle at 15% 20%, rgba(0, 240, 255, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 85% 60%, rgba(0, 230, 118, 0.02) 0%, transparent 40%);
+                radial-gradient(circle at 10% 15%, rgba(6, 182, 212, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 70%, rgba(16, 185, 129, 0.04) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.03) 0%, transparent 50%);
+            min-height: 100vh;
         }
 
+        /* SYSTEM BAR SUPERIOR */
         .system-bar {
-            background: #0B0E14;
-            border-bottom: 1px solid var(--border-color);
-            padding: 10px 24px;
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
+            background: rgba(10, 15, 24, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-dim);
+            padding: 12px 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .system-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .brand-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-emerald));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 16px;
+            color: #06090e;
+            box-shadow: 0 0 15px var(--accent-cyan-glow);
+        }
+
+        .brand-title {
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: -0.3px;
+        }
+
+        .brand-subtitle {
+            font-size: 11px;
+            color: var(--accent-cyan);
+            font-family: var(--font-mono);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .system-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+        }
+
+        .telemetry-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-dim);
+            padding: 6px 12px;
+            border-radius: 20px;
             color: var(--text-muted);
-            letter-spacing: 0.05em;
-            flex-wrap: wrap;
-            gap: 12px;
         }
 
         .status-dot {
-            display: inline-block;
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background-color: var(--green-opportunity);
-            box-shadow: 0 0 10px var(--green-opportunity);
-            margin-right: 6px;
-            animation: pulse 2s infinite;
+            background: var(--accent-emerald);
+            box-shadow: 0 0 8px var(--accent-emerald);
+            animation: pulse-glow 2s infinite ease-in-out;
         }
 
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.4; }
-            100% { opacity: 1; }
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.9); }
         }
 
-        .app-container {
-            max-width: 1440px;
+        /* MAIN CONTAINER */
+        .main-wrapper {
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 32px 24px 80px 24px;
+            padding: 28px 32px 64px;
         }
 
-        .header-section {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 24px;
-            margin-bottom: 32px;
-            align-items: stretch;
+        /* HEADER HERO */
+        .hero-section {
+            margin-bottom: 28px;
         }
 
-        .brand-pitch-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 36px;
-            position: relative;
-            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%);
-        }
-
-        .brand-pitch-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--cyan-accent);
-        }
-
-        .tag-pill {
+        .hero-badge {
             display: inline-flex;
             align-items: center;
-            background: rgba(0, 240, 255, 0.08);
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            color: var(--cyan-accent);
+            gap: 6px;
+            background: rgba(6, 182, 212, 0.08);
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            color: var(--accent-cyan);
             font-family: var(--font-mono);
-            font-size: 0.7rem;
-            padding: 4px 10px;
+            font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 16px;
+            letter-spacing: 1px;
+            padding: 4px 12px;
+            border-radius: 12px;
+            margin-bottom: 12px;
         }
 
-        .pitch-title {
-            font-size: 2.4rem;
+        .hero-title {
+            font-size: 28px;
             font-weight: 800;
-            line-height: 1.15;
-            letter-spacing: -0.02em;
-            color: #FFFFFF;
-            margin-bottom: 16px;
-        }
-
-        .pitch-title span {
-            color: var(--cyan-accent);
-            background: linear-gradient(90deg, var(--cyan-accent), #00E676);
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ffffff 40%, var(--text-muted) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .pitch-subtitle {
-            font-size: 1.05rem;
+        .hero-description {
+            font-size: 14px;
             color: var(--text-muted);
-            max-width: 780px;
-            line-height: 1.6;
+            max-width: 880px;
         }
 
-        .telemetry-summary-card {
-            background: var(--bg-panel);
-            border: 1px solid var(--border-color);
+        /* CONTROLS CARD */
+        .control-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-dim);
+            border-radius: 14px;
             padding: 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .metric-group {
-            margin-bottom: 16px;
-        }
-
-        .metric-label {
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-bottom: 4px;
-        }
-
-        .metric-value {
-            font-family: var(--font-mono);
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #FFFFFF;
-        }
-
-        .metric-value.danger { color: var(--red-alert); }
-        .metric-value.success { color: var(--green-opportunity); }
-
-        .metric-footnote {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-        }
-
-        /* Demo Console Card */
-        .search-console-card {
-            background: var(--bg-card);
-            border: 1px solid var(--cyan-accent);
-            box-shadow: 0 0 24px rgba(0, 240, 255, 0.12);
-            padding: 28px;
-            margin-bottom: 32px;
-            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
-        }
-
-        .search-console-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .search-input-group {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .search-input {
-            flex: 1;
-            background: #0B0E14;
-            border: 1px solid var(--border-color);
-            color: #FFF;
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            padding: 12px 16px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .search-input:focus {
-            border-color: var(--cyan-accent);
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
-        }
-
-        .preset-pills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .btn-pill {
-            background: #0B0E14;
-            border: 1px solid var(--border-color);
-            color: var(--text-muted);
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            padding: 6px 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-pill:hover {
-            border-color: var(--cyan-accent);
-            color: var(--cyan-accent);
-            background: rgba(0, 240, 255, 0.05);
-        }
-
-        .problem-solution-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-bottom: 32px;
-        }
-
-        .box-panel {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 28px;
-            position: relative;
-        }
-
-        .box-panel.problem {
-            border-left: 4px solid var(--red-alert);
-        }
-
-        .box-panel.solution {
-            border-left: 4px solid var(--green-opportunity);
-        }
-
-        .box-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-        }
-
-        .box-header h3 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-
-        .box-panel.problem h3 { color: var(--red-alert); }
-        .box-panel.solution h3 { color: var(--green-opportunity); }
-
-        .box-desc {
-            font-size: 0.92rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .impact-list {
-            list-style: none;
-        }
-
-        .impact-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            font-size: 0.85rem;
-            margin-bottom: 10px;
-            color: var(--text-main);
-        }
-
-        .telemetry-strip {
-            background: #0B0E14;
-            border: 1px solid var(--border-color);
-            padding: 16px 24px;
-            margin-bottom: 32px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: var(--font-mono);
-            font-size: 0.78rem;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .ticker-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .ticker-label { color: var(--text-dim); }
-        .ticker-val { color: #FFFFFF; font-weight: bold; }
-
-        .badge-alert {
-            background: var(--red-glow);
-            color: var(--red-alert);
-            border: 1px solid var(--red-alert);
-            padding: 2px 6px;
-            font-size: 0.68rem;
-            text-transform: uppercase;
-        }
-
-        .badge-opportunity {
-            background: var(--green-glow);
-            color: var(--green-opportunity);
-            border: 1px solid var(--green-opportunity);
-            padding: 2px 6px;
-            font-size: 0.68rem;
-            text-transform: uppercase;
-        }
-
-        .section-title-bar {
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 12px;
             margin-bottom: 24px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .input-bar {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
-
-        .section-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #FFFFFF;
-            letter-spacing: -0.01em;
-        }
-
-        .charts-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-bottom: 32px;
-        }
-
-        .chart-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 24px;
-        }
-
-        .chart-header {
-            margin-bottom: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        .chart-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #FFFFFF;
-        }
-
-        .chart-sub {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-
-        .chart-container {
-            position: relative;
-            height: 320px;
-            width: 100%;
-        }
-
-        .simulator-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 32px;
-            margin-bottom: 32px;
-        }
-
-        .simulator-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 32px;
-        }
-
-        .control-group {
-            margin-bottom: 20px;
-        }
-
-        .control-label {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .preset-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
             gap: 12px;
+            margin-bottom: 16px;
         }
 
-        .btn-preset {
-            background: var(--bg-panel);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 12px;
-            font-family: var(--font-sans);
-            font-size: 0.82rem;
-            font-weight: 600;
-            text-align: left;
-            cursor: pointer;
-            transition: all 0.2s;
+        .url-input-wrap {
+            position: relative;
+            flex: 1;
         }
 
-        .btn-preset:hover {
-            border-color: var(--border-highlight);
-            background: var(--bg-card-hover);
-        }
-
-        .btn-preset.active {
-            border-color: var(--cyan-accent);
-            background: rgba(0, 240, 255, 0.05);
-            color: var(--cyan-accent);
-        }
-
-        .sim-results {
-            background: var(--bg-panel);
-            border: 1px solid var(--border-color);
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .result-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 0.85rem;
-        }
-
-        .result-row:last-child {
-            border-bottom: none;
-        }
-
-        .result-val {
-            font-family: var(--font-mono);
-            font-weight: bold;
-            color: #FFFFFF;
-        }
-
-        .table-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            margin-bottom: 32px;
-            overflow: hidden;
-        }
-
-        .table-responsive {
-            overflow-x: auto;
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 0.85rem;
-        }
-
-        .data-table th {
-            background: #0B0E14;
-            padding: 14px 20px;
-            font-family: var(--font-mono);
-            font-size: 0.72rem;
+        .url-input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
             color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            border-bottom: 1px solid var(--border-color);
+            font-size: 16px;
         }
 
-        .data-table td {
-            padding: 14px 20px;
-            border-bottom: 1px solid var(--border-color);
+        .url-input {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-dim);
+            border-radius: 10px;
+            padding: 14px 16px 14px 46px;
             color: var(--text-main);
+            font-size: 14px;
+            font-family: var(--font-sans);
+            transition: all 0.2s ease;
         }
 
-        .data-table tr:hover {
-            background: var(--bg-card-hover);
+        .url-input:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 0 3px var(--accent-cyan-glow);
         }
 
-        .track-artist {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        .feature-bar-bg {
-            background: #151D2A;
-            height: 6px;
-            width: 100px;
-            display: inline-block;
-            margin-right: 8px;
-            vertical-align: middle;
-        }
-
-        .feature-bar-fill {
-            background: var(--cyan-accent);
-            height: 100%;
-        }
-
-        .cta-banner {
-            background: linear-gradient(135deg, #0F141E 0%, #172133 100%);
-            border: 1px solid var(--cyan-accent);
-            padding: 40px;
-            text-align: center;
-            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
-        }
-
-        .cta-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: #FFFFFF;
-            margin-bottom: 12px;
-        }
-
-        .cta-desc {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            max-width: 640px;
-            margin: 0 auto 24px auto;
-        }
-
-        .btn-action {
-            background: var(--cyan-accent);
-            color: #07090E;
-            border: none;
-            padding: 12px 28px;
-            font-family: var(--font-mono);
+        .btn-analyze {
+            background: linear-gradient(135deg, #0284c7, var(--accent-cyan));
+            color: #06090e;
             font-weight: 700;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            font-size: 14px;
+            border: none;
+            border-radius: 10px;
+            padding: 0 28px;
             cursor: pointer;
-            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px var(--accent-cyan-glow);
         }
 
-        .btn-action:hover {
-            box-shadow: 0 0 20px var(--cyan-accent);
+        .btn-analyze:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.35);
+        }
+
+        .btn-analyze:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            background: #334155;
+            color: #94a3b8;
+            box-shadow: none;
+        }
+
+        /* PRESETS */
+        .presets-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .presets-label {
+            font-size: 12px;
+            color: var(--text-dim);
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .preset-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-dim);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .preset-btn:hover {
+            border-color: var(--accent-cyan);
+            background: var(--bg-card-hover);
             transform: translateY(-1px);
         }
 
-        /* Modal Styles */
-        .modal-overlay {
+        .preset-btn.active {
+            background: rgba(6, 182, 212, 0.12);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            box-shadow: 0 0 10px var(--accent-cyan-glow);
+        }
+
+        /* ALERTA FALLBACK */
+        .fallback-alert {
             display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(7, 9, 14, 0.88);
-            backdrop-filter: blur(8px);
-            z-index: 9999;
+            margin-top: 16px;
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 13px;
+            color: #fcd34d;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .fallback-alert.show {
+            display: flex;
+        }
+
+        .fallback-icon {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        /* GRID PRINCIPAL DE PREDICCIÓN */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 360px 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-dim);
+            border-radius: 14px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .card-header {
+            margin-bottom: 18px;
+        }
+
+        .card-tag {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 4px;
+        }
+
+        .card-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .card-subtitle {
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-top: 2px;
+        }
+
+        /* GAUGE VIRAL P90 */
+        .gauge-card-body {
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            flex: 1;
+            padding: 10px 0;
         }
 
-        .modal-card {
-            background: var(--bg-card);
-            border: 1px solid var(--cyan-accent);
-            max-width: 720px;
-            width: 100%;
-            padding: 32px;
+        .gauge-wrapper {
             position: relative;
-            box-shadow: 0 0 40px rgba(0, 240, 255, 0.25);
-            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%);
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
+            width: 200px;
+            height: 200px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 16px;
-            margin-bottom: 20px;
+            justify-content: center;
         }
 
-        .modal-title {
+        .gauge-svg {
+            transform: rotate(-90deg);
+            width: 200px;
+            height: 200px;
+        }
+
+        .gauge-bg {
+            fill: none;
+            stroke: #1e293b;
+            stroke-width: 14;
+        }
+
+        .gauge-meter {
+            fill: none;
+            stroke: var(--accent-emerald);
+            stroke-width: 14;
+            stroke-linecap: round;
+            stroke-dasharray: 565;
+            stroke-dashoffset: 565;
+            transition: stroke-dashoffset 1s ease-out, stroke 0.5s ease;
+        }
+
+        .gauge-content {
+            position: absolute;
+            text-align: center;
+        }
+
+        .gauge-value {
+            font-size: 42px;
+            font-weight: 800;
             font-family: var(--font-mono);
-            font-size: 1.05rem;
-            font-weight: bold;
-            color: var(--cyan-accent);
+            letter-spacing: -1px;
+            color: var(--text-main);
         }
 
-        .close-btn {
-            background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer;
+        .gauge-unit {
+            font-size: 20px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .gauge-caption {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+            font-family: var(--font-mono);
+        }
+
+        .viral-badge {
+            margin-top: 18px;
+            width: 100%;
+            text-align: center;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+            transition: all 0.3s ease;
+        }
+
+        .viral-badge.viral-yes {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid var(--accent-emerald);
+            color: #34d399;
+            box-shadow: 0 0 15px var(--accent-emerald-glow);
+        }
+
+        .viral-badge.viral-no {
+            background: rgba(100, 116, 139, 0.12);
+            border: 1px solid #475569;
+            color: #94a3b8;
+        }
+
+        .gauge-submetrics {
+            margin-top: 18px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+        }
+
+        .submetric-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-dim);
+            border-radius: 6px;
+            padding: 8px 10px;
+        }
+
+        .submetric-label {
+            color: var(--text-dim);
+            margin-bottom: 2px;
+        }
+
+        .submetric-value {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* RADAR CHART */
+        .chart-container {
+            position: relative;
+            flex: 1;
+            min-height: 270px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .radar-scores-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .radar-score-pill {
+            background: var(--bg-card);
+            border: 1px solid var(--border-dim);
+            border-radius: 8px;
+            padding: 8px 10px;
+            text-align: center;
+        }
+
+        .radar-score-name {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+        }
+
+        .radar-score-val {
+            font-size: 16px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            color: var(--accent-cyan);
+            margin-top: 2px;
+        }
+
+        /* BOTTOM SECTION: RECOMENDACIONES & METADATOS */
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 20px;
         }
 
         @media (max-width: 1024px) {
-            .header-section, .problem-solution-grid, .charts-grid, .simulator-grid {
+            .bottom-grid {
                 grid-template-columns: 1fr;
             }
+        }
+
+        .recommendation-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .recommendation-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-dim);
+            border-radius: 8px;
+            padding: 12px 14px;
+            font-size: 13px;
+            line-height: 1.4;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .rec-tag {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .rec-tag.friction {
+            background: rgba(244, 63, 94, 0.15);
+            color: #fb7185;
+            border: 1px solid rgba(244, 63, 94, 0.3);
+        }
+
+        .rec-tag.strength {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .rec-text {
+            color: var(--text-main);
+            flex: 1;
+        }
+
+        /* METADATA INSPECTOR */
+        .meta-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+        }
+
+        .meta-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-dim);
+            border-radius: 6px;
+        }
+
+        .meta-key {
+            color: var(--text-dim);
+        }
+
+        .meta-val {
+            color: var(--accent-cyan);
+            font-weight: 500;
+            max-width: 60%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* SPINNER */
+        .spinner {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(6, 9, 14, 0.3);
+            border-top-color: #06090e;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
 
-    <!-- Bar de Sistema Superior con Reloj y Contador de Créditos -->
-    <div class="system-bar">
-        <div>
-            <span class="status-dot"></span>
-            SONIXPULSE AI CORE // MODEL v2.4 (K-MEANS & FINANCIAL ROI ENGINE)
-        </div>
-        <div>
-            INGESTION TARGET: SPOTIFY TOP 50 ECUADOR REAL-TIME
-        </div>
-        <div style="display:flex; align-items:center; gap:16px;">
-            <div id="demo-credits-badge" style="background:rgba(0, 240, 255, 0.1); border:1px solid var(--cyan-accent); color:var(--cyan-accent); padding:4px 10px; font-family:var(--font-mono); font-size:0.75rem; font-weight:bold;">
-                ⚡ 5 / 5 CONSULTAS DEMO GRATIS
-            </div>
-            <div id="live-timestamp" style="font-family:var(--font-mono); color:#FFF; font-weight:bold;">
-                ⏱️ Carga de reloj...
-            </div>
-        </div>
-    </div>
-
-    <div class="app-container">
-
-        <!-- Banner de Encabezado -->
-        <div class="header-section">
-            <div class="brand-pitch-card">
-                <div class="tag-pill">Plataforma B2B de Sonic Branding Predictivo</div>
-                <h1 class="pitch-title">
-                    Predice la <span>Saturación Acústica</span> del Mercado Musical 6 Meses Antes.
-                </h1>
-                <p class="pitch-subtitle">
-                    SonixPulse AI ayuda a agencias de publicidad a identificar géneros sobre-explotados y licenciar canciones en el "vacío de mercado" (White-Space Opportunities) antes que sus competidores, reduciendo costos de licencias hasta un 65%.
-                </p>
-            </div>
-            <div class="telemetry-summary-card">
-                <div class="metric-group">
-                    <div class="metric-label">Riesgo por Saturación Actual</div>
-                    <div class="metric-value danger">68.5%</div>
-                    <div class="metric-footnote">Reggaeton / Urbano en Top 50 Ecuador</div>
-                </div>
-                <div class="metric-group">
-                    <div class="metric-label">Vacío de Mercado Detectado</div>
-                    <div class="metric-value success">+28.4%</div>
-                    <div class="metric-footnote">Demanda proyectada 6M: Electro & Organic Acoustic</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Consola Interactiva para Probar Demo Gratis (5 Consultas) -->
-        <div class="search-console-card">
-            <div class="search-console-header">
+    <!-- 1. SYSTEM BAR SUPERIOR -->
+    <header class="system-bar">
+        <div class="system-bar-left">
+            <a href="#" class="brand-logo">
+                <div class="brand-icon">SP</div>
                 <div>
-                    <div style="font-family:var(--font-mono); font-size:0.85rem; color:var(--cyan-accent); font-weight:bold;">
-                        🔬 CONSOLA DE DEMOSTRACIÓN EN VIVO (FREEMIUM DEMO SCANNER)
-                    </div>
-                    <div style="font-size:0.8rem; color:var(--text-muted); margin-top:2px;">
-                        Prueba cualquier canción o playlist en vivo. Tienes <strong style="color:#FFF;" id="credits-sub-text">5 consultas gratuitas</strong> antes de requerir Plan Enterprise.
-                    </div>
+                    <div class="brand-title">SonixPulse AI</div>
+                    <div class="brand-subtitle">Laboratorio EPN · Multimodal Engine</div>
                 </div>
-                <div id="demo-credits-badge-2" style="background:rgba(0, 230, 118, 0.1); border:1px solid var(--green-opportunity); color:var(--green-opportunity); padding:4px 10px; font-family:var(--font-mono); font-size:0.75rem; font-weight:bold;">
-                    5 CRÉDITOS RESTANTES
-                </div>
+            </a>
+        </div>
+        <div class="system-bar-right">
+            <div class="telemetry-pill">
+                <span class="status-dot" id="systemStatusDot"></span>
+                <span id="systemStatusText">Modelo XGBoost P90 Online</span>
             </div>
-
-            <div class="search-input-group">
-                <input type="text" id="demo-song-input" class="search-input" placeholder="Escribe canción, artista o playlist (ej: BbY WOW - KAROL G, Aitana, Bad Bunny)..." value="KAROL G - BbY WOW">
-                <button class="btn-action" onclick="runInteractiveDemo()">🚀 Analizar Canción (Demo Gratis)</button>
+            <div class="telemetry-pill">
+                <span>SHAP TreeExplainer v0.46</span>
             </div>
-
-            <div class="preset-pills">
-                <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-dim); text-transform:uppercase;">O elige un preset en vivo:</span>
-                <button class="btn-pill" onclick="selectAndRunDemo('KAROL G - BbY WOW')">🔥 KAROL G (Hit Saturado)</button>
-                <button class="btn-pill" onclick="selectAndRunDemo('Aitana - SUPERESTRELLA')">⚡ Aitana (Emergente Synth)</button>
-                <button class="btn-pill" onclick="selectAndRunDemo('Jósean Log - Doma')">🌿 Jósean Log (Organic Acoustic)</button>
-                <button class="btn-pill" onclick="selectAndRunDemo('LATIN MAFIA - Te Estoy Correteando')">🇲🇽 LATIN MAFIA (Dance Alternative)</button>
+            <div class="telemetry-pill">
+                <span>v3.0.0-beta</span>
             </div>
         </div>
+    </header>
 
-        <!-- Problema vs Solución -->
-        <div class="problem-solution-grid">
-            <div class="box-panel problem">
-                <div class="box-header">
-                    <h3>El Problema Comercial</h3>
-                    <span class="badge-alert">PÉRDIDA DE CAPITAL</span>
+    <!-- MAIN CONTAINER -->
+    <main class="main-wrapper">
+
+        <!-- 2. HERO TITLE -->
+        <section class="hero-section">
+            <div class="hero-badge">⚡ Inferencia Multimodal & Interpretabilidad</div>
+            <h1 class="hero-title">Consola Científica de Predicción de Viralidad (P90)</h1>
+            <p class="hero-description">
+                Fusión analítica sobre 25 descriptores sensoriales (Luminancia, Contraste RMS, Saturación, Loudness, Tempo BPM, Timbre MFCC y PLN). Clasificación determinista con explicabilidad SHAP para detección del percentil 90 viral.
+            </p>
+        </section>
+
+        <!-- 3. INPUT CONTROL SECTION & PRESETS -->
+        <section class="control-card">
+            <div class="input-bar">
+                <div class="url-input-wrap">
+                    <span class="url-input-icon">🔗</span>
+                    <input 
+                        type="url" 
+                        id="urlInput" 
+                        class="url-input" 
+                        placeholder="Pega una URL pública de YouTube, Shorts, TikTok o Reels para ingesta efímera..."
+                        onkeydown="if(event.key === 'Enter') analyzeUrl()"
+                    />
                 </div>
-                <p class="box-desc">
-                    Las agencias licencian canciones basadas en el ranking viral de hoy (ej. Reggaeton / Perreo). Para cuando la campaña se lanza en 3 meses, el público sufre <strong>fatiga auditiva</strong> y la marca se confunde con cientos de anuncios idénticos.
-                </p>
-                <ul class="impact-list">
-                    <li class="impact-item"><span class="icon" style="color: var(--red-alert)">✕</span> Sobrecosto de licencias en hits saturados (KAROL G, Bad Bunny).</li>
-                    <li class="impact-item"><span class="icon" style="color: var(--red-alert)">✕</span> Disminución del 40% en recordación de marca por clisés sonoros.</li>
-                    <li class="impact-item"><span class="icon" style="color: var(--red-alert)">✕</span> Toma de decisiones por "corazonada" en lugar de biometría de datos.</li>
-                </ul>
+                <button id="analyzeBtn" class="btn-analyze" onclick="analyzeUrl()">
+                    <span id="btnIcon">⚡</span>
+                    <span id="btnText">Analizar Viralidad</span>
+                </button>
             </div>
 
-            <div class="box-panel solution">
-                <div class="box-header">
-                    <h3>La Solución SonixPulse AI</h3>
-                    <span class="badge-opportunity">IA PREDICTIVA</span>
-                </div>
-                <p class="box-desc">
-                    Algoritmos de Machine Learning que vectorizan la biometría acústica (Energy, Danceability, Valence, Tempo) de Spotify para encontrar <strong>territorios sonoros vírgenes</strong> con alto crecimiento proyectado.
-                </p>
-                <ul class="impact-list">
-                    <li class="impact-item"><span class="icon" style="color: var(--green-opportunity)">✓</span> Anticipación de tendencias sonoras con 6 meses de margen.</li>
-                    <li class="impact-item"><span class="icon" style="color: var(--green-opportunity)">✓</span> Ahorro del 50%-65% en costos de sincronización y derechos.</li>
-                    <li class="impact-item"><span class="icon" style="color: var(--green-opportunity)">✓</span> Matcheo de biometría musical con la personalidad exacta de la marca.</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Ticker de Telemetría -->
-        <div class="telemetry-strip">
-            <div class="ticker-item">
-                <span class="ticker-label">SATURACIÓN URBANO (ECU):</span>
-                <span class="ticker-val">ALTA (68.5%)</span>
-                <span class="badge-alert">RIESGO LICENCIA</span>
-            </div>
-            <div class="ticker-item">
-                <span class="ticker-label">TOP 1 REAL HOY:</span>
-                <span class="ticker-val">"BbY WOW" - KAROL G</span>
-                <span class="ticker-label">(Dance: 0.8699 | Energy: 0.7745)</span>
-            </div>
-            <div class="ticker-item">
-                <span class="ticker-label">WHITE SPACE 6M:</span>
-                <span class="ticker-val">ORGANIC ACOUSTIC & SYNTH</span>
-                <span class="badge-opportunity">OPORTUNIDAD B2B</span>
-            </div>
-        </div>
-
-        <!-- Gráficos de Saturación y Proyección -->
-        <div class="section-title-bar">
-            <div class="section-title">Visualización de Saturación & Proyección a 6 Meses</div>
-            <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted)">
-                DATASET: TOP 50 ECUADOR // CLUSTERING K-MEANS
-            </div>
-        </div>
-
-        <div class="charts-grid">
-            <div class="chart-card">
-                <div class="chart-header">
-                    <div>
-                        <div class="chart-title">Matriz Biométrica de Saturación Acústica (Top 50 Ecuador Real)</div>
-                        <div class="chart-sub">Bailabilidad (Danceability) vs Energía (Energy). El cuadrante rojo indica saturación extrema.</div>
-                    </div>
-                </div>
-                <div class="chart-container">
-                    <canvas id="scatterChart"></canvas>
-                </div>
+            <div class="presets-wrapper">
+                <span class="presets-label">Presets Rápidos Calibrados:</span>
+                <button class="preset-btn active" id="btn-preset-viral_hit" onclick="runPreset('viral_hit')">
+                    🔥 Hit Viral de Alto Impacto
+                </button>
+                <button class="preset-btn" id="btn-preset-podcast" onclick="runPreset('podcast')">
+                    🎙️ Podcast Conversacional
+                </button>
+                <button class="preset-btn" id="btn-preset-indie_melancholic" onclick="runPreset('indie_melancholic')">
+                    🌿 Música Indie Melancólica
+                </button>
             </div>
 
-            <div class="chart-card">
-                <div class="chart-header">
-                    <div>
-                        <div class="chart-title">Proyección de Tendencias a 6 Meses</div>
-                        <div class="chart-sub">Comparativa: Densidad de Mercado Actual vs Crecimiento Proyectado</div>
-                    </div>
-                </div>
-                <div class="chart-container">
-                    <canvas id="projectionChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <!-- Simulador de Arquetipos de Marca -->
-        <div class="section-title-bar">
-            <div class="section-title">Simulador de Sonic Branding & ROI para Agencias</div>
-        </div>
-
-        <div class="simulator-card">
-            <div class="simulator-grid">
+            <!-- ALERTA DE FALLBACK TRANSPARENTE -->
+            <div id="fallbackAlert" class="fallback-alert">
+                <span class="fallback-icon">⚠️</span>
                 <div>
-                    <div class="control-group">
-                        <div class="control-label">
-                            <span>SELECCIONA EL ARQUETIPO DE TU MARCA</span>
-                        </div>
-                        <div class="preset-buttons">
-                            <button class="btn-preset active" onclick="updateSimulator('tech')">
-                                🚀 Tech & AI Innovator
-                                <div style="font-size:0.7rem; color:var(--text-muted); font-weight:normal;">Electro Synthwave // Uptempo</div>
-                            </button>
-                            <button class="btn-preset" onclick="updateSimulator('luxury')">
-                                💎 Luxury & Fine Living
-                                <div style="font-size:0.7rem; color:var(--text-muted); font-weight:normal;">Organic Acoustic // Melancholic</div>
-                            </button>
-                            <button class="btn-preset" onclick="updateSimulator('energy')">
-                                ⚡ Gen-Z Energy & Sports
-                                <div style="font-size:0.7rem; color:var(--text-muted); font-weight:normal;">Sub-saturated Dance // High Energy</div>
-                            </button>
-                            <button class="btn-preset" onclick="updateSimulator('corporate')">
-                                🏛️ Corporate & Fintech Trust
-                                <div style="font-size:0.7rem; color:var(--text-muted); font-weight:normal;">Mid-Tempo Melodic // Stable</div>
-                            </button>
+                    <strong>Modo de Contingencia Transparente Activado:</strong> 
+                    <span id="fallbackReasonText">La plataforma bloqueó la descarga automatizada; se aplicó inferencia sobre descriptores neutrales y metadatos accesibles sin interrupción operativa.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. SCIENTIFIC TELEMETRY DASHBOARD -->
+        <section class="dashboard-grid">
+
+            <!-- COLUMNA 1: GAUGE DE PROBABILIDAD VIRAL P90 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Clasificación P90</div>
+                    <h3 class="card-title">Probabilidad Viral</h3>
+                    <p class="card-subtitle">Estimación calibrada de pertenencia al Top 10% (P90)</p>
+                </div>
+
+                <div class="gauge-card-body">
+                    <div class="gauge-wrapper">
+                        <svg class="gauge-svg" viewBox="0 0 200 200">
+                            <circle class="gauge-bg" cx="100" cy="100" r="90" />
+                            <circle id="gaugeMeter" class="gauge-meter" cx="100" cy="100" r="90" />
+                        </svg>
+                        <div class="gauge-content">
+                            <div class="gauge-value" id="gaugeVal">--</div>
+                            <div class="gauge-caption">Score P90</div>
                         </div>
                     </div>
 
-                    <div style="margin-top:24px;">
-                        <div class="control-label">
-                            <span>NLP SENTIMENT ANALYSIS (OLLAMA LOCAL MODEL)</span>
+                    <div id="viralBadge" class="viral-badge viral-yes">
+                        🔥 P90 SUPERADO (PROBABLE VIRAL)
+                    </div>
+
+                    <div class="gauge-submetrics">
+                        <div class="submetric-box">
+                            <div class="submetric-label">Umbral Decisión:</div>
+                            <div class="submetric-value">P90 (≥ 50.0%)</div>
                         </div>
-                        <div style="background:var(--bg-card); border:1px solid var(--border-color); padding:16px; font-family:var(--font-mono); font-size:0.78rem;" id="nlp-box">
-                            <div style="color:var(--cyan-accent); margin-bottom:4px;">MODEL: qwen2.5:7b // OFFLINE INFERENCE</div>
-                            <div style="color:var(--text-muted);">Vibra Lírica Requerida: Introspección futurista, optimismo tecnológico, sintetizadores limpios. Sin clisés de fiesta nocturna.</div>
+                        <div class="submetric-box">
+                            <div class="submetric-label">Margen Delta:</div>
+                            <div class="submetric-value" id="deltaMarginVal">+39.6%</div>
+                        </div>
+                        <div class="submetric-box">
+                            <div class="submetric-label">Motor XGBoost:</div>
+                            <div class="submetric-value">Calibrado v3.0</div>
+                        </div>
+                        <div class="submetric-box">
+                            <div class="submetric-label">Latencia Inferencia:</div>
+                            <div class="submetric-value" id="latencyVal">~14 ms</div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="sim-results">
-                    <div>
-                        <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; margin-bottom:12px; border-bottom:1px solid var(--border-color); padding-bottom:6px;">
-                            PROYECCIÓN DE CAMPAÑA Y HUELGA ACÚSTICA
-                        </div>
-                        <div class="result-row">
-                            <span>Biometría Ideal (Energy / Valence):</span>
-                            <span class="result-val" id="res-biometrics">0.76 / 0.58</span>
-                        </div>
-                        <div class="result-row">
-                            <span>BPM Recomendado:</span>
-                            <span class="result-val" id="res-bpm">118 - 126 BPM</span>
-                        </div>
-                        <div class="result-row">
-                            <span>Riesgo de Saturación de Marca:</span>
-                            <span class="result-val" style="color:var(--green-opportunity);" id="res-risk">BAJO (12.4%)</span>
-                        </div>
-                        <div class="result-row">
-                            <span>Ahorro Proyectado en Licencia:</span>
-                            <span class="result-val" style="color:var(--green-opportunity);" id="res-savings">$45,000 USD (-62%)</span>
-                        </div>
-                        <div class="result-row">
-                            <span>Delta de Recordación de Marca:</span>
-                            <span class="result-val" id="res-recall">+34.8% vs Urbano</span>
-                        </div>
+            <!-- COLUMNA 2: RADAR SENSORIAL TRIDIMENSIONAL -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Fusión de Señal</div>
+                    <h3 class="card-title">Radar Sensorial 3D</h3>
+                    <p class="card-subtitle">Equilibrio relativo entre ejes sensoriales (0 - 100)</p>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="radarChart"></canvas>
+                </div>
+
+                <div class="radar-scores-row">
+                    <div class="radar-score-pill">
+                        <div class="radar-score-name">Visual</div>
+                        <div class="radar-score-val" id="radarScoreVisual">--</div>
                     </div>
-
-                    <div style="margin-top:20px; background:#0B0E14; padding:12px; border:1px solid var(--border-color); font-family:var(--font-mono); font-size:0.75rem;">
-                        <span style="color:var(--cyan-accent);">RECOMMENDED NON-SATURATED TRACK:</span><br>
-                        <strong id="res-track" style="color:#FFF;">"Neon Horizon" - Cyber Groove</strong>
+                    <div class="radar-score-pill">
+                        <div class="radar-score-name">Acústico</div>
+                        <div class="radar-score-val" id="radarScoreAcoustic">--</div>
+                    </div>
+                    <div class="radar-score-pill">
+                        <div class="radar-score-name">Textual</div>
+                        <div class="radar-score-val" id="radarScoreTextual">--</div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Módulo Técnico & Motor Financiero -->
-        <div class="section-title-bar">
-            <div class="section-title">Fundamentación Científica & Modelo Financiero (Dataset / Motor Empírico)</div>
-        </div>
-
-        <div style="background:var(--bg-card); border:1px solid var(--border-color); padding:24px; margin-bottom:32px; font-size:0.85rem; color:var(--text-muted);">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                <span style="color:var(--cyan-accent); font-family:var(--font-mono); font-weight:bold;">MÓDULO TÉCNICO: src/models/financial_roi_engine.py</span>
-                <span style="background:rgba(0, 240, 255, 0.1); border:1px solid var(--cyan-accent); color:var(--cyan-accent); padding:2px 8px; font-family:var(--font-mono); font-size:0.7rem;">CÁLCULO EMPÍRICO BASADO EN DATOS DE INDUSTRIA</span>
-            </div>
-            <p style="line-height:1.6; margin-bottom:16px;">
-                Todos los datos financieros, costos de licencias de sincronización (Sync Licensing Fees) y porcentaje de incremento en recordación de marca provienen de nuestro motor matemático empírico en Python (<code>FinancialROIEngine</code>).
-            </p>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; font-family:var(--font-mono); font-size:0.78rem;">
-                <div style="background:#0B0E14; padding:14px; border:1px solid var(--border-color);">
-                    <div style="color:#FFF; font-weight:bold; margin-bottom:6px;">1. Fórmula de Costo de Licencia (Sync Fee USD)</div>
-                    <code style="color:var(--cyan-accent); display:block; margin-bottom:6px;">Cost = Base_Fee * (1 + Popularity/100)^1.5 * Saturation_Multiplier</code>
-                    <div style="color:var(--text-dim); line-height:1.4;">Calcula la diferencia de licenciar un mega-hit saturado Top 10 ($72,000 USD promediados) vs un tema emergente no saturado ($26,000 USD), generando un ahorro directo del 62%.</div>
+            <!-- COLUMNA 3: EXPLICABILIDAD SHAP TREEEXPLAINER -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Interpretabilidad SHAP</div>
+                    <h3 class="card-title">Contribución Marginal</h3>
+                    <p class="card-subtitle">Aceleradores virales (+) vs Factores de fricción (-)</p>
                 </div>
-                <div style="background:#0B0E14; padding:14px; border:1px solid var(--border-color);">
-                    <div style="color:#FFF; font-weight:bold; margin-bottom:6px;">2. Modelo de Fatiga Auditiva (Brand Recall Decay)</div>
-                    <code style="color:var(--green-opportunity); display:block; margin-bottom:6px;">Recall = Base_Recall * (1 - 0.42 * (Saturation_Pct/100))</code>
-                    <div style="color:var(--text-dim); line-height:1.4;">Un mercado saturado al 68.5% degrada la recordación a ~45.3%, mientras que vacíos de mercado logran un ~80.1% (+34.8% a +48.2% de ventaja neta).</div>
+
+                <div class="chart-container">
+                    <canvas id="shapChart"></canvas>
                 </div>
             </div>
-        </div>
 
-        <!-- Tabla Telemétrica Top 50 -->
-        <div class="section-title-bar">
-            <div class="section-title">Explorador Telemétrico del Top 50 Ecuador (Datos Reales de Hoy)</div>
-        </div>
+        </section>
 
-        <div class="table-card">
-            <div class="table-responsive">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Canción / Artista</th>
-                            <th>Género Detectado</th>
-                            <th>Danceability</th>
-                            <th>Energy</th>
-                            <th>Tempo</th>
-                            <th>Estado de Saturación</th>
-                            <th>Acción Demo en Vivo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <strong>BbY WOW</strong>
-                                <div class="track-artist">KAROL G, Judeline, rusowsky</div>
-                            </td>
-                            <td>Reggaeton Urbano</td>
-                            <td>
-                                <div class="feature-bar-bg"><div class="feature-bar-fill" style="width:87%;"></div></div>
-                                0.8699
-                            </td>
-                            <td>
-                                <div class="feature-bar-bg"><div class="feature-bar-fill" style="width:77%;"></div></div>
-                                0.7745
-                            </td>
-                            <td>99.8 BPM</td>
-                            <td><span class="badge-alert">SATURACIÓN EXTREMA</span></td>
-                            <td>
-                                <button class="btn-action" style="padding:4px 10px; font-size:0.7rem;" onclick="selectAndRunDemo('KAROL G - BbY WOW')">🔬 Analizar</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>Dichavate</strong>
-                                <div class="track-artist">Ya Ice Dilan, Rey Tony, Helabusador</div>
-                            </td>
-                            <td>Urbano / Trap</td>
-                            <td>
-                                <div class="feature-bar-bg"><div class="feature-bar-fill" style="width:80%;"></div></div>
-                                0.7968
-                            </td>
-                            <td>
-                                <div class="feature-bar-bg"><div class="feature-bar-fill" style="width:79%;"></div></div>
-                                0.7890
-                            </td>
-                            <td>95.7 BPM</td>
-                            <td><span class="badge-alert">SATURACIÓN EXTREMA</span></td>
-                            <td>
-                                <button class="btn-action" style="padding:4px 10px; font-size:0.7rem;" onclick="selectAndRunDemo('Ya Ice Dilan - Dichavate')">🔬 Analizar</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>COQUETA</strong>
-                                <div class="track-artist">Fuerza Regida, Grupo Frontera</div>
-                            </td>
-                            <td>Regional Urbano</td>
-                            <td>
-                                <div class="feature-bar-bg"><div class="feature-bar-fill" style="width:73%;"></div></div>
-                                0.7309
-                            </td>
-                            <td>
-                                <div class="feature-bar-bg"><div class="feature-bar-fill" style="width:80%;"></div></div>
-                                0.7995
-                            </td>
-                            <td>125.9 BPM</td>
-                            <td><span class="badge-alert">SATURACIÓN MEDIA-ALTA</span></td>
-                            <td>
-                                <button class="btn-action" style="padding:4px 10px; font-size:0.7rem;" onclick="selectAndRunDemo('Fuerza Regida - COQUETA')">🔬 Analizar</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>Midnight Echoes</strong>
-                                <div class="track-artist">Sonic Pulse</div>
-                            </td>
-                            <td>Indie Organic Acoustic</td>
-                            <td>
-                                <div class="feature-bar-bg"><div class="feature-bar-fill" style="width:48%;"></div></div>
-                                0.4820
-                            </td>
-                            <td>
-                                <div class="feature-bar-bg"><div class="feature-bar-fill" style="width:38%;"></div></div>
-                                0.3840
-                            </td>
-                            <td>84.0 BPM</td>
-                            <td><span class="badge-opportunity">VACÍO DE MERCADO</span></td>
-                            <td>
-                                <button class="btn-action" style="padding:4px 10px; font-size:0.7rem;" onclick="selectAndRunDemo('Sonic Pulse - Midnight Echoes')">🔬 Analizar</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>Neon Horizon</strong>
-                                <div class="track-artist">Cyber Groove</div>
-                            </td>
-                            <td>Synthwave / Electro</td>
-                            <td>
-                                <div class="feature-bar-bg"><div class="feature-bar-fill" style="width:65%;"></div></div>
-                                0.6520
-                            </td>
-                            <td>
-                                <div class="feature-bar-bg"><div class="feature-bar-fill" style="width:84%;"></div></div>
-                                0.8420
-                            </td>
-                            <td>122.0 BPM</td>
-                            <td><span class="badge-opportunity">CRECIMIENTO EMERGENTE</span></td>
-                            <td>
-                                <button class="btn-action" style="padding:4px 10px; font-size:0.7rem;" onclick="selectAndRunDemo('Cyber Groove - Neon Horizon')">🔬 Analizar</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <!-- 5. RECOMENDACIONES TÁCTICAS Y METADATOS -->
+        <section class="bottom-grid">
+
+            <!-- PANEL DE RECOMENDACIONES TÁCTICAS -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Guía Táctica Accionable</div>
+                    <h3 class="card-title">Recomendaciones para Creadores & Marcas</h3>
+                    <p class="card-subtitle">Acciones específicas sugeridas a partir de los SHAP values</p>
+                </div>
+
+                <div class="recommendation-list" id="recommendationsList">
+                    <!-- Generado dinámicamente -->
+                </div>
             </div>
-        </div>
 
-        <!-- Banner Inferior con Botón de Demo Gratis -->
-        <div class="cta-banner">
-            <h2 class="cta-title">Transforma el Sonic Branding de tu Agencia hoy.</h2>
-            <p class="cta-desc">
-                Ejecuta una consulta telemétrica en vivo del Top 50 de Ecuador o analiza cualquier canción de tu campaña con el motor SonixPulse AI.
-            </p>
-            <button class="btn-action" onclick="runInteractiveDemo()">🚀 Ejecutar Consulta Telemétrica Demo (5 Gratis)</button>
-        </div>
+            <!-- PANEL DE METADATOS Y TELEMETRÍA DE ENTRADA -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tag">Inspección de Señal</div>
+                    <h3 class="card-title">Metadatos del Contenido</h3>
+                    <p class="card-subtitle">Parámetros de extracción y descriptor multimodal</p>
+                </div>
 
-    </div>
-
-    <!-- Modal Interactivo para Informe de Cliente y Paywall -->
-    <div id="demoModal" class="modal-overlay">
-        <div class="modal-card">
-            <div class="modal-header">
-                <div class="modal-title" id="modalTitle">PROCESANDO ANÁLISIS TELEMÉTRICO EN VIVO...</div>
-                <button class="close-btn" onclick="closeModal()">✕</button>
+                <div class="meta-list">
+                    <div class="meta-row">
+                        <span class="meta-key">Título / Identificador:</span>
+                        <span class="meta-val" id="metaTitle">Preset: Hit Viral</span>
+                    </div>
+                    <div class="meta-row">
+                        <span class="meta-key">Fuente / URL:</span>
+                        <span class="meta-val" id="metaUrl">preset://viral_hit</span>
+                    </div>
+                    <div class="meta-row">
+                        <span class="meta-key">Fallback Aplicado:</span>
+                        <span class="meta-val" id="metaFallback">No (Directo)</span>
+                    </div>
+                    <div class="meta-row">
+                        <span class="meta-key">Variables Continuas:</span>
+                        <span class="meta-val">25 Características</span>
+                    </div>
+                    <div class="meta-row">
+                        <span class="meta-key">Canales Sensoriales:</span>
+                        <span class="meta-val">Visión + Audio + PLN</span>
+                    </div>
+                    <div class="meta-row">
+                        <span class="meta-key">Timestamp Inferencia:</span>
+                        <span class="meta-val" id="metaTimestamp">--</span>
+                    </div>
+                </div>
             </div>
-            <div id="modalBody">
-                <!-- Dynamic Content -->
-            </div>
-        </div>
-    </div>
 
+        </section>
+
+    </main>
+
+    <!-- LOGICA FRONTEND JAVASCRIPT REACTIVA -->
     <script>
-        // 1. Reloj Dinámico en Tiempo Real (Fix del Reloj)
-        function updateLiveClock() {
-            const clockEl = document.getElementById('live-timestamp');
-            if (!clockEl) return;
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            clockEl.innerHTML = `<span style="color:var(--cyan-accent);">⏱️ ${year}-${month}-${day} ${hours}:${minutes}:${seconds}</span> <span style="font-size:0.7rem; color:var(--text-muted);">(ECT/LATAM)</span>`;
-        }
-        setInterval(updateLiveClock, 1000);
-        updateLiveClock();
+        // ESTADO GLOBAL DE GRÁFICAS
+        let radarChartInstance = null;
+        let shapChartInstance = null;
 
-        // 2. Control de Consultas Gratis (Freemium Tracker en LocalStorage)
-        function getCredits() {
-            const c = localStorage.getItem('sonixpulse_free_credits');
-            return c === null ? 5 : parseInt(c);
-        }
-
-        function updateCreditsDisplay() {
-            const c = getCredits();
-            const badge1 = document.getElementById('demo-credits-badge');
-            const badge2 = document.getElementById('demo-credits-badge-2');
-            const subText = document.getElementById('credits-sub-text');
-
-            if (badge1) {
-                badge1.innerHTML = `⚡ ${c} / 5 CONSULTAS DEMO GRATIS`;
-                if (c === 0) {
-                    badge1.style.borderColor = '#FF3B30';
-                    badge1.style.color = '#FF3B30';
-                    badge1.style.background = 'rgba(255, 59, 48, 0.15)';
-                } else {
-                    badge1.style.borderColor = 'var(--cyan-accent)';
-                    badge1.style.color = 'var(--cyan-accent)';
-                    badge1.style.background = 'rgba(0, 240, 255, 0.1)';
-                }
-            }
-
-            if (badge2) {
-                badge2.innerHTML = `${c} CRÉDITOS RESTANTES`;
-                if (c === 0) {
-                    badge2.style.borderColor = '#FF3B30';
-                    badge2.style.color = '#FF3B30';
-                    badge2.style.background = 'rgba(255, 59, 48, 0.15)';
-                } else {
-                    badge2.style.borderColor = 'var(--green-opportunity)';
-                    badge2.style.color = 'var(--green-opportunity)';
-                    badge2.style.background = 'rgba(0, 230, 118, 0.1)';
-                }
-            }
-
-            if (subText) {
-                subText.textContent = `${c} consultas gratuitas`;
-            }
-        }
-        updateCreditsDisplay();
-
-        // 3. Ejecución de Demo Interactiva en Vivo o Paywall
-        function selectAndRunDemo(queryName) {
-            const input = document.getElementById('demo-song-input');
-            if (input) input.value = queryName;
-            runInteractiveDemo();
-        }
-
-        function runInteractiveDemo() {
-            const input = document.getElementById('demo-song-input');
-            const queryTrack = (input && input.value.trim()) ? input.value.trim() : "KAROL G - BbY WOW";
-            const credits = getCredits();
-            const modal = document.getElementById('demoModal');
-            const mTitle = document.getElementById('modalTitle');
-            const mBody = document.getElementById('modalBody');
-
-            modal.style.display = 'flex';
-
-            if (credits > 0) {
-                const newCredits = credits - 1;
-                localStorage.setItem('sonixpulse_free_credits', newCredits);
-                updateCreditsDisplay();
-
-                // Pantalla de carga telemétrica en vivo
-                mTitle.textContent = "⚙️ INICIANDO EXTRACCIÓN TELEMÉTRICA EN TIEMPO REAL";
-                mBody.innerHTML = `
-                    <div style="font-family:var(--font-mono); font-size:0.85rem; color:var(--text-muted); line-height:1.9;">
-                        <div style="color:var(--cyan-accent); margin-bottom:8px;">[1/4] Extrayendo metadatos de Spotify API para "${queryTrack}"... OK</div>
-                        <div style="color:var(--cyan-accent); margin-bottom:8px;">[2/4] Vectorizando biometría acústica (Danceability, Energy, Valence, Tempo)... OK</div>
-                        <div style="color:var(--cyan-accent); margin-bottom:8px;">[3/4] Evaluando distancia vectorial en K-Means Cluster Saturation... OK</div>
-                        <div style="color:var(--cyan-accent); margin-bottom:16px;">[4/4] Ejecutando algoritmo FinancialROIEngine (Sync Licensing & Memory Decay)... OK</div>
-                    </div>
-                    <div style="background:#0B0E14; border:1px solid var(--cyan-accent); padding:20px; text-align:center; font-family:var(--font-mono);">
-                        <div style="color:var(--cyan-accent); font-weight:bold; font-size:0.9rem;">
-                            ⏳ GENERANDO DOSSIER TELEMÉTRICO B2B...
-                        </div>
-                    </div>
-                `;
-
-                // Renderizar el informe completo y realista después de 800ms
-                setTimeout(() => {
-                    renderTelemetryReport(queryTrack, newCredits);
-                }, 800);
-
-            } else {
-                // Renderizar Paywall Enterprise cuando el cliente ha consumido sus 5 demos
-                mTitle.textContent = "🔒 0 / 5 CONSULTAS DEMO RESTANTES — LÍMITE ALCANZADO";
-                mBody.innerHTML = `
-                    <div style="background:rgba(255,59,48,0.1); border:1px solid var(--red-alert); padding:20px; margin-bottom:20px;">
-                        <div style="color:var(--red-alert); font-family:var(--font-mono); font-weight:bold; font-size:1rem; margin-bottom:8px;">
-                            HAS AGOTADO TUS 5 CONSULTAS GRATUITAS DE DEMOSTRACIÓN
-                        </div>
-                        <div style="font-size:0.88rem; color:var(--text-muted); line-height:1.6;">
-                            Has probado las 5 demostraciones gratuitas de SonixPulse AI. Para realizar consultas telemétricas ilimitadas de cualquier canción o playlist en Ecuador y LATAM, suscríbete al Plan Enterprise.
-                        </div>
-                    </div>
-
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px;">
-                        <div style="background:var(--bg-card); border:1px solid var(--border-color); padding:20px; text-align:center;">
-                            <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--cyan-accent); font-weight:bold;">PLAN STARTER AGENCY</div>
-                            <div style="font-size:1.5rem; font-weight:800; color:#FFF; margin:8px 0;">$499 USD <span style="font-size:0.8rem; font-weight:normal; color:var(--text-muted);">/ mes</span></div>
-                            <div style="font-size:0.78rem; color:var(--text-muted); line-height:1.5;">Hasta 100 consultas telemétricas en vivo al mes para campañas regionales.</div>
-                        </div>
-
-                        <div style="background:var(--bg-card); border:1px solid var(--green-opportunity); padding:20px; text-align:center; position:relative;">
-                            <div style="position:absolute; top:-10px; right:12px; background:var(--green-opportunity); color:#000; font-family:var(--font-mono); font-size:0.65rem; padding:2px 8px; font-weight:bold;">RECOMENDADO</div>
-                            <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--green-opportunity); font-weight:bold;">PLAN UNLIMITED ENTERPRISE</div>
-                            <div style="font-size:1.5rem; font-weight:800; color:#FFF; margin:8px 0;">$1,499 USD <span style="font-size:0.8rem; font-weight:normal; color:var(--text-muted);">/ mes</span></div>
-                            <div style="font-size:0.78rem; color:var(--text-muted); line-height:1.5;">Consultas ilimitadas + API REST dedicada + Soporte Técnico 24/7.</div>
-                        </div>
-                    </div>
-
-                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-                        <button style="background:none; border:1px solid var(--border-color); color:var(--text-muted); font-family:var(--font-mono); font-size:0.75rem; padding:8px 14px; cursor:pointer;" onclick="resetDemoCredits()">↻ Restablecer 5 Consultas Demo Gratis (Modo Pruebas)</button>
-                        <button class="btn-action" style="padding:10px 20px; font-size:0.82rem;" onclick="activateEnterpriseSimulation()">💳 Activar Licencia Enterprise</button>
-                    </div>
-                `;
-            }
-        }
-
-        // 4. Renderizador del Dossier Telemétrico Realista de Cliente
-        function renderTelemetryReport(trackName, remainingCredits) {
-            const mTitle = document.getElementById('modalTitle');
-            const mBody = document.getElementById('modalBody');
-
-            // Determinar métricas basadas en si es hit saturado o canción emergente
-            const isSaturated = trackName.toLowerCase().includes('karol') || trackName.toLowerCase().includes('dichavate') || trackName.toLowerCase().includes('bad bunny') || trackName.toLowerCase().includes('urbano');
-
-            const saturationScore = isSaturated ? "68.5% (SATURACIÓN EXTREMA)" : "14.2% (VACÍO DE MERCADO)";
-            const statusBadge = isSaturated ? '<span class="badge-alert">RIESGO LICENCIA ALTO</span>' : '<span class="badge-opportunity">OPORTUNIDAD DE ORO</span>';
-            const danceVal = isSaturated ? "0.8699" : "0.5820";
-            const energyVal = isSaturated ? "0.7745" : "0.6420";
-            const valenceVal = isSaturated ? "0.6759" : "0.5110";
-            const tempoVal = isSaturated ? "99.8 BPM" : "122.0 BPM";
-
-            const syncHitCost = "$72,000 USD";
-            const syncWhiteCost = "$26,000 USD";
-            const savingsVal = isSaturated ? "$46,000 USD (-63.8% ROI)" : "$52,000 USD (-72.2% ROI)";
-            const recallVal = isSaturated ? "45.3% (Fatiga Auditiva)" : "80.1% (+34.8% Retención Superior)";
-            const recTrack = isSaturated ? '"SUPERESTRELLA" — Aitana (Electro Synthwave)' : '"Midnight Echoes" — Sonic Pulse (Organic Acoustic)';
-
-            mTitle.innerHTML = `📊 DOSSIER TELEMÉTRICO DE MARCA: <span style="color:#FFF;">${trackName}</span>`;
-
-            mBody.innerHTML = `
-                <div style="background:#0B0E14; border:1px solid var(--border-color); padding:16px; margin-bottom:20px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                        <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--cyan-accent); font-weight:bold;">RESULTADO DE INFERENCIA BIOMÉTRICA</span>
-                        ${statusBadge}
-                    </div>
-                    <div style="font-size:0.88rem; color:#FFF; line-height:1.5;">
-                        • <strong>Canción / Target:</strong> ${trackName}<br>
-                        • <strong>Nivel de Saturación Acústica:</strong> <strong style="color:${isSaturated ? 'var(--red-alert)' : 'var(--green-opportunity)'};">${saturationScore}</strong><br>
-                        • <strong>Diagnóstico B2B:</strong> ${isSaturated ? 'Canción sobre-explotada en comerciales. Alto costo de sincronización con baja diferenciación visual.' : 'Excelente posición sonora. Crecimiento orgánico sostenido para los próximos 6 meses.'}
-                    </div>
-                </div>
-
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px;">
-                    <div style="background:var(--bg-panel); border:1px solid var(--border-color); padding:16px; font-family:var(--font-mono); font-size:0.78rem;">
-                        <div style="color:var(--cyan-accent); font-weight:bold; margin-bottom:10px; border-bottom:1px solid var(--border-color); padding-bottom:4px;">
-                            MÉTRICAS BIOMÉTRICAS MEDIDAS
-                        </div>
-                        <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Danceability:</span><strong style="color:#FFF;">${danceVal}</strong></div>
-                        <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Energy:</span><strong style="color:#FFF;">${energyVal}</strong></div>
-                        <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Valence:</span><strong style="color:#FFF;">${valenceVal}</strong></div>
-                        <div style="display:flex; justify-content:space-between;"><span>Tempo:</span><strong style="color:#FFF;">${tempoVal}</strong></div>
-                    </div>
-
-                    <div style="background:var(--bg-panel); border:1px solid var(--border-color); padding:16px; font-family:var(--font-mono); font-size:0.78rem;">
-                        <div style="color:var(--green-opportunity); font-weight:bold; margin-bottom:10px; border-bottom:1px solid var(--border-color); padding-bottom:4px;">
-                            DESGLOSE FINANCIERO ROI (FINANCIAL ENGINE)
-                        </div>
-                        <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Costo Licencia Hit:</span><span style="color:var(--red-alert);">${syncHitCost}</span></div>
-                        <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Costo Licencia Vacío:</span><span style="color:var(--green-opportunity);">${syncWhiteCost}</span></div>
-                        <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Ahorro Estimado:</span><strong style="color:var(--green-opportunity);">${savingsVal}</strong></div>
-                        <div style="display:flex; justify-content:space-between;"><span>Recordación Marca:</span><strong style="color:#FFF;">${recallVal}</strong></div>
-                    </div>
-                </div>
-
-                <div style="background:var(--bg-card); border:1px solid var(--cyan-accent); padding:16px; margin-bottom:20px; font-family:var(--font-mono); font-size:0.8rem;">
-                    <span style="color:var(--cyan-accent); font-weight:bold;">🎵 TEMA RECOMENDADO EN EL VACÍO DE MERCADO:</span><br>
-                    <strong style="color:#FFF; font-size:0.95rem; display:block; margin:6px 0;">${recTrack}</strong>
-                    <div style="color:var(--text-muted); font-size:0.75rem;">Optimizado para maximizar retorno de inversión en licencias y captura de atención en pauta comercial.</div>
-                </div>
-
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">⚡ Te quedan <strong>${remainingCredits}</strong> de 5 consultas gratuitas.</span>
-                    <div style="display:flex; gap:10px;">
-                        <button style="background:none; border:1px solid var(--cyan-accent); color:var(--cyan-accent); font-family:var(--font-mono); font-size:0.75rem; padding:8px 12px; cursor:pointer;" onclick="alert('Descargando dossier PDF para presentación a cliente B2B...')">📄 Descargar Dossier PDF</button>
-                        <button class="btn-action" style="padding:8px 16px; font-size:0.78rem;" onclick="closeModal()">Cerrar Informe</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function closeModal() {
-            document.getElementById('demoModal').style.display = 'none';
-        }
-
-        function resetDemoCredits() {
-            localStorage.setItem('sonixpulse_free_credits', 5);
-            updateCreditsDisplay();
-            closeModal();
-            alert('¡Se han restablecido tus 5 consultas de demostración gratuita!');
-        }
-
-        function activateEnterpriseSimulation() {
-            alert('¡Licencia Enterprise Activada en Modo Simulación! Ahora tienes consultas telemétricas ilimitadas.');
-            localStorage.setItem('sonixpulse_free_credits', 999);
-            updateCreditsDisplay();
-            closeModal();
-        }
-
-        // 5. Gráfico Scatter (Matriz Acústica)
-        const scatterData = {
-            datasets: [
-                {
-                    label: 'Saturado (Reggaeton / Urbano)',
-                    data: [
-                        { x: 0.8699, y: 0.7745, r: 12, name: 'BbY WOW - KAROL G' },
-                        { x: 0.7968, y: 0.7890, r: 10, name: 'Dichavate - Ya Ice Dilan' },
-                        { x: 0.8420, y: 0.8110, r: 11, name: 'Peli De Terror - Køddy G' },
-                        { x: 0.8840, y: 0.7210, r: 14, name: 'Gata Only - FloyyMenor' },
-                        { x: 0.9120, y: 0.7780, r: 13, name: 'PERRO NEGRO - Bad Bunny' }
-                    ],
-                    backgroundColor: 'rgba(255, 59, 48, 0.7)',
-                    borderColor: '#FF3B30',
-                    borderWidth: 1
-                },
-                {
-                    label: 'Vacío de Mercado (Organic Acoustic)',
-                    data: [
-                        { x: 0.4820, y: 0.3840, r: 10, name: 'Midnight Echoes' },
-                        { x: 0.5120, y: 0.4180, r: 9, name: 'Doma - Jósean Log' },
-                        { x: 0.5210, y: 0.4020, r: 8, name: 'Acoustic Soul' }
-                    ],
-                    backgroundColor: 'rgba(0, 230, 118, 0.7)',
-                    borderColor: '#00E676',
-                    borderWidth: 1
-                },
-                {
-                    label: 'Crecimiento Emergente (Electro Synth)',
-                    data: [
-                        { x: 0.6520, y: 0.8420, r: 11, name: 'Neon Horizon' },
-                        { x: 0.7120, y: 0.8350, r: 10, name: 'SUPERESTRELLA - Aitana' },
-                        { x: 0.7650, y: 0.7120, r: 9, name: 'Te Estoy Correteando - LATIN MAFIA' }
-                    ],
-                    backgroundColor: 'rgba(0, 240, 255, 0.7)',
-                    borderColor: '#00F0FF',
-                    borderWidth: 1
-                }
-            ]
+        // DICCIONARIO DE TRADUCCIÓN DE FEATURES PARA SHAP
+        const FEATURE_NAME_LABELS = {
+            'visual_contrast_rms': 'Contraste Visual RMS',
+            'visual_saturation_mean': 'Saturación Cromática',
+            'visual_brightness_mean': 'Brillo de Luminancia',
+            'visual_color_entropy': 'Entropía del Color',
+            'visual_canny_edge_density': 'Densidad de Bordes (Canny)',
+            'audio_rms_mean': 'Nivel RMS (Loudness)',
+            'audio_bpm_tempo': 'Tempo Rítmico (BPM)',
+            'audio_zcr_mean': 'Cruces por Cero (ZCR)',
+            'audio_mfcc_1': 'Timbre MFCC-1',
+            'audio_mfcc_2': 'Timbre MFCC-2',
+            'audio_mfcc_3': 'Timbre MFCC-3',
+            'audio_mfcc_4': 'Timbre MFCC-4',
+            'text_inflesz_score': 'Legibilidad INFLESZ',
+            'text_fernandez_huerta_score': 'Legibilidad Fdez-Huerta',
+            'text_vader_compound': 'Sentimiento VADER',
+            'text_word_count': 'Conteo de Palabras'
         };
 
-        const ctxScatter = document.getElementById('scatterChart').getContext('2d');
-        new Chart(ctxScatter, {
-            type: 'bubble',
-            data: scatterData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        title: { display: true, text: 'Danceability (Bailabilidad)', color: '#8A99AD', font: { family: 'JetBrains Mono' } },
-                        min: 0.3, max: 1.0,
-                        grid: { color: '#1B2433' },
-                        ticks: { color: '#8A99AD' }
-                    },
-                    y: {
-                        title: { display: true, text: 'Energy (Energía Acústica)', color: '#8A99AD', font: { family: 'JetBrains Mono' } },
-                        min: 0.2, max: 1.0,
-                        grid: { color: '#1B2433' },
-                        ticks: { color: '#8A99AD' }
-                    }
+        function formatFeatureName(rawName) {
+            const clean = rawName.replace('num__', '').replace('text__', '');
+            if (FEATURE_NAME_LABELS[clean]) {
+                return FEATURE_NAME_LABELS[clean];
+            }
+            if (rawName.startsWith('text__')) {
+                return `Palabra: "${clean}"`;
+            }
+            return clean.replace(/_/g, ' ');
+        }
+
+        // VERIFICACIÓN DE SALUD AL INICIAR
+        async function checkHealth() {
+            try {
+                const res = await fetch('/api/health');
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('systemStatusDot').style.background = '#10b981';
+                    document.getElementById('systemStatusText').innerText = `Modelo ${data.model_artifact} Online`;
+                }
+            } catch (err) {
+                console.warn('Health check diferido:', err);
+                document.getElementById('systemStatusDot').style.background = '#f59e0b';
+                document.getElementById('systemStatusText').innerText = 'Modo Local Autónomo';
+            }
+        }
+
+        // CONTROL VISUAL DE BOTÓN ANALIZAR
+        function setAnalyzeLoading(loading) {
+            const btn = document.getElementById('analyzeBtn');
+            const icon = document.getElementById('btnIcon');
+            const text = document.getElementById('btnText');
+            if (loading) {
+                btn.disabled = true;
+                icon.innerHTML = '<span class="spinner"></span>';
+                text.innerText = 'Analizando señales...';
+            } else {
+                btn.disabled = false;
+                icon.innerText = '⚡';
+                text.innerText = 'Analizar Viralidad';
+            }
+        }
+
+        // PETICIÓN PRINCIPAL DE PREDICCIÓN
+        async function fetchPrediction(payload) {
+            setAnalyzeLoading(true);
+            const startTime = performance.now();
+
+            try {
+                const res = await fetch('/api/predict-virality', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!res.ok) {
+                    const errData = await res.json().catch(() => ({}));
+                    throw new Error(errData.detail || `Error HTTP ${res.status}`);
+                }
+
+                const data = await res.json();
+                const latency = Math.round(performance.now() - startTime);
+                document.getElementById('latencyVal').innerText = `${latency} ms`;
+
+                renderDashboard(data);
+            } catch (err) {
+                console.error('Error al predecir viralidad:', err);
+                alert(`Error en el análisis: ${err.message}`);
+            } finally {
+                setAnalyzeLoading(false);
+            }
+        }
+
+        // EJECUTAR PRESET RÁPIDO
+        function runPreset(presetName) {
+            // Actualizar botones de preset
+            document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.getElementById(`btn-preset-${presetName}`);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            fetchPrediction({ preset: presetName });
+        }
+
+        // EJECUTAR ANÁLISIS DE URL
+        function analyzeUrl() {
+            const urlInput = document.getElementById('urlInput');
+            const url = urlInput.value.trim();
+            if (!url) {
+                alert('Por favor introduce una URL pública válida.');
+                urlInput.focus();
+                return;
+            }
+
+            // Quitar clase activa de presets
+            document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+
+            fetchPrediction({ url: url });
+        }
+
+        // RENDERIZAR RESULTADOS EN EL DASHBOARD
+        function renderDashboard(data) {
+            // 1. Gauge y Probabilidad
+            const probPct = data.probability_percentage;
+            const gaugeMeter = document.getElementById('gaugeMeter');
+            const gaugeVal = document.getElementById('gaugeVal');
+            const viralBadge = document.getElementById('viralBadge');
+            const deltaMarginVal = document.getElementById('deltaMarginVal');
+
+            gaugeVal.innerText = `${probPct.toFixed(1)}%`;
+
+            // Circunferencia r=90 => 2 * PI * 90 = 565.48
+            const circumference = 565.48;
+            const offset = circumference - (probPct / 100) * circumference;
+            gaugeMeter.style.strokeDashoffset = offset;
+
+            const isViral = data.is_viral_p90;
+            const delta = (probPct - 50.0).toFixed(1);
+            deltaMarginVal.innerText = delta >= 0 ? `+${delta}%` : `${delta}%`;
+
+            if (isViral) {
+                gaugeMeter.style.stroke = 'var(--accent-emerald)';
+                viralBadge.className = 'viral-badge viral-yes';
+                viralBadge.innerText = '🔥 P90 SUPERADO (PROBABLE VIRAL)';
+            } else {
+                gaugeMeter.style.stroke = '#64748b';
+                viralBadge.className = 'viral-badge viral-no';
+                viralBadge.innerText = '📊 CONTENIDO ESTÁNDAR';
+            }
+
+            // 2. Alerta de Fallback
+            const fallbackAlert = document.getElementById('fallbackAlert');
+            const fallbackReasonText = document.getElementById('fallbackReasonText');
+            if (data.fallback_applied) {
+                fallbackAlert.classList.add('show');
+                fallbackReasonText.innerText = data.fallback_reason || 'Se aplicó contingencia multimodal.';
+            } else {
+                fallbackAlert.classList.remove('show');
+            }
+
+            // 3. Radar Sensorial Scores
+            const radar = data.radar_scores || { visual: 50, acoustic: 50, textual: 50 };
+            document.getElementById('radarScoreVisual').innerText = `${radar.visual.toFixed(1)}`;
+            document.getElementById('radarScoreAcoustic').innerText = `${radar.acoustic.toFixed(1)}`;
+            document.getElementById('radarScoreTextual').innerText = `${radar.textual.toFixed(1)}`;
+
+            renderRadarChart(radar);
+
+            // 4. Gráfica SHAP
+            const posFactors = data.top_positive_factors || [];
+            const negFactors = data.top_negative_factors || [];
+            renderShapChart(posFactors, negFactors);
+
+            // 5. Recomendaciones Tácticas
+            renderRecommendations(data.recommendations || []);
+
+            // 6. Metadatos
+            const meta = data.metadata || {};
+            document.getElementById('metaTitle').innerText = meta.title || data.url || 'Contenido Analizado';
+            document.getElementById('metaUrl').innerText = data.url || 'Direct Ingestion';
+            document.getElementById('metaFallback').innerText = data.fallback_applied ? 'Sí (Contingencia)' : 'No (Inferencia Directa)';
+            document.getElementById('metaTimestamp').innerText = new Date().toLocaleTimeString();
+        }
+
+        // RENDERIZAR CHART RADAR (CHART.JS)
+        function renderRadarChart(scores) {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            if (radarChartInstance) {
+                radarChartInstance.destroy();
+            }
+
+            radarChartInstance = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Eje Visual', 'Eje Acústico', 'Eje Textual'],
+                    datasets: [{
+                        label: 'Descriptores Multimodales (0-100)',
+                        data: [scores.visual, scores.acoustic, scores.textual],
+                        backgroundColor: 'rgba(6, 182, 212, 0.22)',
+                        borderColor: '#06b6d4',
+                        borderWidth: 2.5,
+                        pointBackgroundColor: '#10b981',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 1.5,
+                        pointRadius: 5,
+                        pointHoverRadius: 7
+                    }]
                 },
-                plugins: {
-                    legend: { labels: { color: '#E2E8F0', font: { family: 'Inter', size: 11 } } },
-                    tooltip: {
-                        callbacks: {
-                            label: function(ctx) {
-                                return ctx.raw.name + ' (Dance: ' + ctx.raw.x + ', Energy: ' + ctx.raw.y + ')';
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            min: 0,
+                            max: 100,
+                            ticks: {
+                                stepSize: 20,
+                                display: false
+                            },
+                            angleLines: {
+                                color: 'rgba(255, 255, 255, 0.08)'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.08)'
+                            },
+                            pointLabels: {
+                                color: '#94a3b8',
+                                font: {
+                                    family: "'JetBrains Mono', monospace",
+                                    size: 11,
+                                    weight: '600'
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#0c121c',
+                            borderColor: '#1d2a3d',
+                            borderWidth: 1,
+                            titleFont: { family: "'Inter', sans-serif" },
+                            bodyFont: { family: "'JetBrains Mono', monospace" }
+                        }
+                    }
+                }
+            });
+        }
+
+        // RENDERIZAR CHART SHAP (HORIZONTAL BAR CHART)
+        function renderShapChart(positives, negatives) {
+            const ctx = document.getElementById('shapChart').getContext('2d');
+            if (shapChartInstance) {
+                shapChartInstance.destroy();
+            }
+
+            // Combinar y ordenar factores para vista compacta
+            const combined = [
+                ...positives.slice(0, 4).map(p => ({ ...p, isPos: true })),
+                ...negatives.slice(0, 4).map(n => ({ ...n, isPos: false }))
+            ];
+
+            // Orden descendente por magnitud absoluta
+            combined.sort((a, b) => Math.abs(b.shap_value) - Math.abs(a.shap_value));
+
+            const labels = combined.map(item => formatFeatureName(item.feature));
+            const dataVals = combined.map(item => item.shap_value);
+            const bgColors = combined.map(item => item.isPos ? 'rgba(16, 185, 129, 0.85)' : 'rgba(244, 63, 94, 0.85)');
+            const borderColors = combined.map(item => item.isPos ? '#10b981' : '#f43f5e');
+
+            shapChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: dataVals,
+                        backgroundColor: bgColors,
+                        borderColor: borderColors,
+                        borderWidth: 1.5,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.06)',
+                                zeroLineColor: 'rgba(255, 255, 255, 0.25)'
+                            },
+                            ticks: {
+                                color: '#64748b',
+                                font: { family: "'JetBrains Mono', monospace", size: 10 }
+                            }
+                        },
+                        y: {
+                            grid: { display: false },
+                            ticks: {
+                                color: '#cbd5e1',
+                                font: { family: "'Inter', sans-serif", size: 11, weight: '500' }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#0c121c',
+                            borderColor: '#1d2a3d',
+                            borderWidth: 1,
+                            callbacks: {
+                                label: function(context) {
+                                    const val = context.raw;
+                                    return ` Impacto SHAP: ${val > 0 ? '+' : ''}${val.toFixed(4)}`;
+                                }
                             }
                         }
                     }
                 }
-            }
-        });
-
-        // 6. Gráfico de Barras (Proyección de Crecimiento)
-        const ctxProj = document.getElementById('projectionChart').getContext('2d');
-        new Chart(ctxProj, {
-            type: 'bar',
-            data: {
-                labels: ['Urbano/Perreo', 'Electro Synth', 'Organic Acoustic', 'Pop Melódico'],
-                datasets: [
-                    {
-                        label: 'Saturación Actual (%)',
-                        data: [68.5, 18.2, 8.1, 5.2],
-                        backgroundColor: '#FF3B30',
-                        barPercentage: 0.5
-                    },
-                    {
-                        label: 'Proyección Crecimiento 6M (%)',
-                        data: [-15.2, 28.4, 42.0, 8.5],
-                        backgroundColor: '#00E676',
-                        barPercentage: 0.5
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: { grid: { color: '#1B2433' }, ticks: { color: '#8A99AD', font: { family: 'JetBrains Mono' } } },
-                    y: { grid: { color: '#1B2433' }, ticks: { color: '#8A99AD' } }
-                },
-                plugins: {
-                    legend: { labels: { color: '#E2E8F0', font: { family: 'Inter', size: 11 } } }
-                }
-            }
-        });
-
-        // 7. Actualizador del Simulador de Arquetipos
-        function updateSimulator(type) {
-            document.querySelectorAll('.btn-preset').forEach(btn => btn.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-
-            const nlpBox = document.getElementById('nlp-box');
-            const resBiometrics = document.getElementById('res-biometrics');
-            const resBpm = document.getElementById('res-bpm');
-            const resRisk = document.getElementById('res-risk');
-            const resSavings = document.getElementById('res-savings');
-            const resRecall = document.getElementById('res-recall');
-            const resTrack = document.getElementById('res-track');
-
-            if (type === 'tech') {
-                nlpBox.innerHTML = '<div style="color:var(--cyan-accent); margin-bottom:4px;">MODEL: qwen2.5:7b // OFFLINE INFERENCE</div><div style="color:var(--text-muted);">Vibra Lírica: Introspección futurista, optimismo tecnológico, sintetizadores limpios. Sin clisés de fiesta nocturna.</div>';
-                resBiometrics.textContent = '0.76 / 0.58';
-                resBpm.textContent = '118 - 126 BPM';
-                resRisk.textContent = 'BAJO (12.4%)';
-                resSavings.textContent = '$46,000 USD (-63.8%)';
-                resRecall.textContent = '+34.8% vs Urbano';
-                resTrack.textContent = '"SUPERESTRELLA" - Aitana';
-            } else if (type === 'luxury') {
-                nlpBox.innerHTML = '<div style="color:var(--cyan-accent); margin-bottom:4px;">MODEL: qwen2.5:7b // OFFLINE INFERENCE</div><div style="color:var(--text-muted);">Vibra Lírica: Elegancia orgánica, calidez acústica, serenidad sobria, alta memorabilidad emocional.</div>';
-                resBiometrics.textContent = '0.42 / 0.35';
-                resBpm.textContent = '80 - 95 BPM';
-                resRisk.textContent = 'MUY BAJO (4.1%)';
-                resSavings.textContent = '$58,000 USD (-71.2%)';
-                resRecall.textContent = '+48.2% vs Urbano';
-                resTrack.textContent = '"Doma" - Jósean Log';
-            } else if (type === 'energy') {
-                nlpBox.innerHTML = '<div style="color:var(--cyan-accent); margin-bottom:4px;">MODEL: qwen2.5:7b // OFFLINE INFERENCE</div><div style="color:var(--text-muted);">Vibra Lírica: Adrenalina limpia, superación deportiva, ritmo acelerado sin saturación reggaetón.</div>';
-                resBiometrics.textContent = '0.88 / 0.82';
-                resBpm.textContent = '128 - 134 BPM';
-                resRisk.textContent = 'MODERADO (22.0%)';
-                resSavings.textContent = '$32,000 USD (-45.0%)';
-                resRecall.textContent = '+29.1% vs Urbano';
-                resTrack.textContent = '"Te Estoy Correteando" - LATIN MAFIA';
-            } else if (type === 'corporate') {
-                nlpBox.innerHTML = '<div style="color:var(--cyan-accent); margin-bottom:4px;">MODEL: qwen2.5:7b // OFFLINE INFERENCE</div><div style="color:var(--text-muted);">Vibra Lírica: Confianza institucional, solidez financiera, armonía moderna y sobria.</div>';
-                resBiometrics.textContent = '0.55 / 0.60';
-                resBpm.textContent = '100 - 112 BPM';
-                resRisk.textContent = 'BAJO (8.5%)';
-                resSavings.textContent = '$40,000 USD (-55.5%)';
-                resRecall.textContent = '+31.4% vs Urbano';
-                resTrack.textContent = '"Andean Chill" - Lojano Beats';
-            }
+            });
         }
+
+        // RENDERIZAR LISTA DE RECOMENDACIONES TÁCTICAS
+        function renderRecommendations(recs) {
+            const container = document.getElementById('recommendationsList');
+            container.innerHTML = '';
+
+            if (!recs || recs.length === 0) {
+                container.innerHTML = `
+                    <div class="recommendation-item">
+                        <span class="rec-tag strength">Info</span>
+                        <div class="rec-text">Sin recomendaciones tácticas prioritarias registradas.</div>
+                    </div>
+                `;
+                return;
+            }
+
+            recs.forEach(rec => {
+                const isFriction = rec.includes('[Fricción táctica]');
+                const cleanText = rec.replace('[Fricción táctica]', '').replace('[Fortaleza clave]', '').trim();
+
+                const item = document.createElement('div');
+                item.className = 'recommendation-item';
+
+                item.innerHTML = `
+                    <span class="rec-tag ${isFriction ? 'friction' : 'strength'}">
+                        ${isFriction ? 'Fricción' : 'Fortaleza'}
+                    </span>
+                    <div class="rec-text">${cleanText}</div>
+                `;
+
+                container.appendChild(item);
+            });
+        }
+
+        // INICIALIZACIÓN AUTOMÁTICA AL CARGAR
+        document.addEventListener('DOMContentLoaded', () => {
+            checkHealth();
+            runPreset('viral_hit');
+        });
     </script>
 </body>
 </html>

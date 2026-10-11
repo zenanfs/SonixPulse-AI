@@ -13,9 +13,11 @@ import logging
 import requests
 import argparse
 from typing import Dict, Any, Optional
-from dotenv import load_dotenv
-
-load_dotenv()
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] [%(levelname)s] %(message)s')
 logger = logging.getLogger("SonixPulse.LyricNLP")

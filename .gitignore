@@ -1,22 +1,60 @@
 # Entornos virtuales
+.venv/
 venv/
 env/
 ENV/
-.venv/
 
-# Archivos de caché de Python
+# Cachés y artefactos de Python
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
 .pytest_cache/
 
-# Variables de entorno con credenciales secretas
+# Carpetas y cachés de Agentes de IA
+.agents/
+.antigravity/
+
+# Modelos binarios y pesos pesados
+models/*.joblib
+models/*.pkl
+*.joblib
+*.pkl
+
+# Datos generados y datasets
+data/processed/
+data/temp/
+*.csv
+
+# Archivos multimedia temporales de yt-dlp y ffmpeg
+*.wav
+*.mp4
+*.webm
+*.part
+*.m4a
+*.mp3
+*.ogg
+*.flac
+
+# Secretos y credenciales locales
 .env
 !.env.example
+*.pem
+*.key
 
-# Datos temporales
+# Sistema y logs
 *.log
 .DS_Store
+Thumbs.db
 
-# Archivos de compilación o modelos pesados temporales
-*.pkl
+# IDEs y editores locales
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Cobertura y herramientas de linting
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/

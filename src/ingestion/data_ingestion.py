@@ -15,7 +15,11 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 from typing import List, Dict, Any, Optional
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 logging.basicConfig(
     level=logging.INFO,
@@ -23,8 +27,6 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S'
 )
 logger = logging.getLogger("SonixPulse.Ingestion")
-
-load_dotenv()
 
 TOP50_ECUADOR_PLAYLIST_ID = "37i9dQZEVXbLw8tC2WcDFy"
 

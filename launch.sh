@@ -7,7 +7,8 @@ echo "======================================================================"
 echo "    🚀 INICIANDO PLATAFORMA SONIXPULSE AI (MODO SIMULACIÓN CLIENTE B2B)"
 echo "======================================================================"
 
-PROJECT_DIR="/home/zfernandez/.gemini/antigravity/scratch/trendscout"
+# Determinar dinámicamente la raíz del proyecto
+PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$PROJECT_DIR" || exit
 
 # 1. Activar entorno virtual
