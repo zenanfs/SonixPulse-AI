@@ -240,5 +240,56 @@ def ingest_multimodal_url(url: str, ffmpeg_path: Optional[str] = None) -> Dict[s
     return ingestor.ingest_url(url)
 
 
+def ingest_audio_url(url: str, output_dir: Path, ffmpeg_path: Optional[str] = None) -> Optional[Path]:
+    """Descarga efimera de audio desde un enlace publico (YouTube, SoundCloud, enlace directo).
+
+    Retorna la ruta al archivo descargado en output_dir o None en caso de fallo.
+    """
+    if not url or not isinstance(url, str) or not url.strip():
+        return None
+
+    import uuid
+
+    clean_url = url.strip()
+    resolved_ffmpeg = ffmpeg_path or find_ffmpeg()
+    output_dir.mkdir(parents=True, exist_ok=True)
+    target_prefix = f"audio_url_{uuid.uuid4().hex[:10]}"
+    out_template = str(output_dir / f"{target_prefix}.%(ext)s")
+
+    ydl_opts: Dict[str, Any] = {
+        "format": "bestaudio/best",
+        "outtmpl": out_template,
+        "noplaylist": True,
+        "quiet": True,
+        "no_warnings": True,
+        "socket_timeout": 12,
+        "postprocessors": [
+            {
+                "key": "FFmpegExtractAudio",
+                "preferredcodec": "wav",
+                "preferredquality": "192",
+            }
+        ],
+    }
+
+    if resolved_ffmpeg:
+        ydl_opts["ffmpeg_location"] = resolved_ffmpeg
+
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([clean_url])
+
+        candidatos = [
+            f for f in output_dir.glob(f"{target_prefix}.*")
+            if f.is_file() and f.suffix.lower() in {".wav", ".mp3", ".m4a", ".ogg", ".opus", ".flac", ".webm"}
+        ]
+        if candidatos:
+            return candidatos[0]
+        return None
+    except Exception as exc:
+        logger.warning("Fallo al descargar audio desde enlace '%s': %s", clean_url, exc)
+        return None
+
+
 # Alias de conveniencia
 ingest_url = ingest_multimodal_url

@@ -7,6 +7,7 @@ Exporta utilidades e ingestores efímeros para URLs públicas y fuentes multimed
 from src.ingestion.multimodal_ingestion import (
     MultimodalIngestor,
     ingest_multimodal_url,
+    ingest_audio_url,
     ingest_url,
     find_ffmpeg,
 )
@@ -14,6 +15,7 @@ from src.ingestion.multimodal_ingestion import (
 __all__ = [
     "MultimodalIngestor",
     "ingest_multimodal_url",
+    "ingest_audio_url",
     "ingest_url",
     "find_ffmpeg",
 ]

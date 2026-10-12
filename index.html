@@ -199,6 +199,8 @@
             margin-bottom: 20px;
             padding-bottom: 14px;
             border-bottom: 1px solid var(--border-dim);
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
         .section-title {
@@ -210,6 +212,32 @@
         .section-desc {
             font-size: 12px;
             color: var(--text-dim);
+        }
+
+        /* ETIQUETA DE MODO ACTIVO */
+        .active-mode-tag {
+            font-size: 12px;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid var(--border-dim);
+            transition: all 0.2s ease;
+        }
+
+        .active-mode-tag.preset-mode {
+            background: rgba(59, 130, 246, 0.12);
+            color: #60a5fa;
+            border-color: rgba(59, 130, 246, 0.35);
+        }
+
+        .active-mode-tag.custom-mode {
+            background: rgba(16, 185, 129, 0.12);
+            color: #34d399;
+            border-color: rgba(16, 185, 129, 0.35);
         }
 
         /* ZONAS DE CARGA EN GRID */
@@ -450,6 +478,7 @@
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
+            user-select: none;
         }
 
         .preset-chip:hover {
@@ -460,9 +489,10 @@
 
         .preset-chip.active {
             border-color: var(--accent-blue);
-            background: rgba(59, 130, 246, 0.12);
+            background: rgba(59, 130, 246, 0.16);
             color: #60a5fa;
             font-weight: 600;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
         }
 
         .btn-submit-analysis {
@@ -488,14 +518,54 @@
         }
 
         .btn-submit-analysis:disabled {
-            opacity: 0.6;
+            opacity: 0.65;
             cursor: not-allowed;
             transform: none;
         }
 
-        /* PANEL DE RESULTADOS (OCULTO INICIALMENTE O VISIBLE TRAS INFERENCIA) */
+        /* BANNER DE ESTADO Y ERRORES VISIBLES */
+        .status-alert-banner {
+            margin-top: 16px;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            line-height: 1.4;
+            transition: all 0.3s ease;
+        }
+
+        .status-alert-banner.error {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            color: #fca5a5;
+        }
+
+        .status-alert-banner.success {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            color: #6ee7b7;
+        }
+
+        /* EFECTO DE RESALTADO AL ACTUALIZAR RESULTADOS */
         .results-section {
             display: block;
+            border-radius: 14px;
+            transition: box-shadow 0.4s ease;
+        }
+
+        .results-section.results-updated {
+            animation: pulse-update 1.2s ease-out;
+        }
+
+        @keyframes pulse-update {
+            0% {
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.6);
+            }
+            100% {
+                box-shadow: none;
+            }
         }
 
         .results-header {
@@ -872,6 +942,9 @@
                     <h3 class="section-title">Entradas del Contenido</h3>
                     <p class="section-desc">Carga archivos directamente o selecciona un preset para diagnóstico instantáneo</p>
                 </div>
+                <div id="activeModeIndicator" class="active-mode-tag preset-mode">
+                    Modo activo: Preset Campaña Comercial
+                </div>
             </div>
 
             <form id="viralityForm" onsubmit="event.preventDefault(); submitAnalysis();">
@@ -929,6 +1002,10 @@
                                 <button type="button" class="btn-remove-file" onclick="removeAudio(event)">Quitar</button>
                             </div>
                         </div>
+                        <div class="audio-url-box" style="margin-top: 14px; width: 100%; border-top: 1px solid var(--border-dim); padding-top: 10px;" onclick="event.stopPropagation();">
+                            <label for="audioUrlInput" style="display: block; font-size: 11px; font-family: var(--font-mono); color: var(--text-dim); text-transform: uppercase; margin-bottom: 4px;">O ingresa enlace de audio (YouTube, SoundCloud, enlace directo):</label>
+                            <input type="url" id="audioUrlInput" class="text-input" style="width: 100%; height: 34px; padding: 6px 10px; background: rgba(0, 0, 0, 0.35); border: 1px solid var(--border-dim); border-radius: 6px; color: var(--text-main); font-size: 12px; outline: none; font-family: var(--font-sans);" placeholder="Pega enlace de YouTube, SoundCloud o audio directo..." oninput="handleAudioUrlInput(this.value)">
+                        </div>
                     </div>
 
                     <!-- ZONA 3: COPY O TEXTO -->
@@ -941,7 +1018,7 @@
                             id="copyTextInput" 
                             class="text-input-copy" 
                             placeholder="Escribe el gancho de texto, título de la pieza o copy promocional para evaluar su impacto emocional y fluidez de lectura..."
-                            oninput="updateTextCounter(this.value)"
+                            oninput="handleTextCopyInput(this.value)"
                         ></textarea>
                     </div>
 
@@ -960,12 +1037,18 @@
                         <button type="button" class="preset-chip" id="chip-podcast_conversacional" onclick="selectPreset('podcast_conversacional')">
                             Podcast Conversacional
                         </button>
+                        <button type="button" class="preset-chip" id="chip-custom" onclick="clearPresetSelection()">
+                            Personalizado (Sin preset)
+                        </button>
                     </div>
 
                     <button type="submit" id="submitBtn" class="btn-submit-analysis">
                         <span id="submitBtnText">Analizar contenido</span>
                     </button>
                 </div>
+
+                <!-- BANNER DE ESTADO Y ERRORES VISIBLES -->
+                <div id="statusAlertBanner" class="status-alert-banner hidden"></div>
             </form>
         </section>
 
@@ -1111,6 +1194,7 @@
         document.addEventListener("DOMContentLoaded", () => {
             setupDragAndDrop();
             checkHealth();
+            updateActiveModeIndicator();
             // Ejecutar preset inicial para mostrar el dashboard listo
             submitAnalysis();
         });
@@ -1128,12 +1212,36 @@
             }
         }
 
-        // Selección de presets
+        // Indicador visual de modo activo
+        function updateActiveModeIndicator() {
+            const indicator = document.getElementById("activeModeIndicator");
+            if (!indicator) return;
+
+            if (selectedPresetKey === "campana_comercial") {
+                indicator.textContent = "Modo activo: Preset Campaña Comercial";
+                indicator.className = "active-mode-tag preset-mode";
+            } else if (selectedPresetKey === "hit_ritmico") {
+                indicator.textContent = "Modo activo: Preset Hit Rítmico";
+                indicator.className = "active-mode-tag preset-mode";
+            } else if (selectedPresetKey === "podcast_conversacional") {
+                indicator.textContent = "Modo activo: Preset Podcast Conversacional";
+                indicator.className = "active-mode-tag preset-mode";
+            } else {
+                indicator.textContent = "Modo activo: Publicidad personalizada";
+                indicator.className = "active-mode-tag custom-mode";
+            }
+        }
+
+        // Selección y conmutación (Toggle) de presets
         function selectPreset(presetKey) {
+            // Si el preset ya está activo, conmutar a modo personalizado
+            if (selectedPresetKey === presetKey) {
+                clearPresetSelection();
+                return;
+            }
+
             selectedPresetKey = presetKey;
-            
-            // Actualizar botones visualmente
-            document.querySelectorAll(".preset-chip").forEach(chip => chip.classList.remove("active"));
+            clearPresetChips();
             const targetChip = document.getElementById("chip-" + presetKey);
             if (targetChip) targetChip.classList.add("active");
 
@@ -1151,9 +1259,26 @@
                 copyInput.value = "Episodio especial: análisis en profundidad sobre hábitos, productividad y reflexión diaria.";
             }
             updateTextCounter(copyInput.value);
+            updateActiveModeIndicator();
 
-            // Ejecutar análisis automático
             submitAnalysis();
+        }
+
+        // Deselección limpia de presets (modo personalizado)
+        function clearPresetSelection() {
+            selectedPresetKey = null;
+            clearPresetChips();
+            const customChip = document.getElementById("chip-custom");
+            if (customChip) customChip.classList.add("active");
+            updateActiveModeIndicator();
+        }
+
+        // Manejo de escritura en copy de texto
+        function handleTextCopyInput(val) {
+            updateTextCounter(val);
+            if (selectedPresetKey !== null) {
+                clearPresetSelection();
+            }
         }
 
         // Contador de caracteres
@@ -1201,8 +1326,7 @@
             if (!files || files.length === 0) return;
             const file = files[0];
             activeImageFile = file;
-            selectedPresetKey = null;
-            clearPresetChips();
+            clearPresetSelection();
 
             const preview = document.getElementById("imagePreviewBox");
             preview.src = URL.createObjectURL(file);
@@ -1231,8 +1355,7 @@
             if (!files || files.length === 0) return;
             const file = files[0];
             activeAudioFile = file;
-            selectedPresetKey = null;
-            clearPresetChips();
+            clearPresetSelection();
 
             const player = document.getElementById("audioPlayer");
             player.src = URL.createObjectURL(file);
@@ -1252,21 +1375,53 @@
             activeAudioFile = null;
             document.getElementById("audioInput").value = "";
             document.getElementById("audioPlayer").src = "";
+            const urlInput = document.getElementById("audioUrlInput");
+            if (urlInput) urlInput.value = "";
             document.getElementById("audioPlaceholder").classList.remove("hidden");
             document.getElementById("audioPreviewContainer").style.display = "none";
             document.getElementById("audioDropzone").classList.remove("has-file");
+        }
+
+        function handleAudioUrlInput(val) {
+            if (val && val.trim()) {
+                clearPresetSelection();
+            }
         }
 
         function clearPresetChips() {
             document.querySelectorAll(".preset-chip").forEach(chip => chip.classList.remove("active"));
         }
 
+        // Despliegue de banner de estado o alerta
+        function showStatusBanner(type, message) {
+            const banner = document.getElementById("statusAlertBanner");
+            if (!banner) return;
+            banner.textContent = message;
+            banner.className = `status-alert-banner ${type}`;
+            banner.classList.remove("hidden");
+
+            if (type === "success") {
+                setTimeout(() => {
+                    banner.classList.add("hidden");
+                }, 5000);
+            }
+        }
+
         // Envío y ejecución del análisis
         async function submitAnalysis() {
             const submitBtn = document.getElementById("submitBtn");
             const submitBtnText = document.getElementById("submitBtnText");
+            const audioUrlVal = document.getElementById("audioUrlInput")?.value?.trim();
+
             submitBtn.disabled = true;
-            submitBtnText.textContent = "Analizando contenido...";
+            if (audioUrlVal) {
+                submitBtnText.textContent = "Descargando y analizando audio en segundo plano...";
+            } else {
+                submitBtnText.textContent = "Procesando componentes multimodales...";
+            }
+
+            const banner = document.getElementById("statusAlertBanner");
+            if (banner) banner.classList.add("hidden");
 
             const formData = new FormData();
 
@@ -1275,6 +1430,9 @@
             }
             if (activeAudioFile) {
                 formData.append("audio", activeAudioFile);
+            }
+            if (audioUrlVal) {
+                formData.append("audio_url", audioUrlVal);
             }
 
             const copyText = document.getElementById("copyTextInput").value;
@@ -1293,14 +1451,29 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error("Respuesta no satisfactoria del servidor");
+                    const errorPayload = await response.json().catch(() => ({}));
+                    const errorDetail = errorPayload.detail || "Error en el servidor al evaluar los componentes.";
+                    throw new Error(errorDetail);
                 }
 
                 const data = await response.json();
                 renderResults(data);
 
+                // Confirmación visual
+                const origenDesc = data.metadata?.origen ? data.metadata.origen.replace("_", " ") : "componentes analizados";
+                showStatusBanner("success", `Diagnóstico generado correctamente: ${origenDesc}`);
+
+                // Efecto de actualización en resultados
+                const resultsSection = document.getElementById("resultsSection");
+                if (resultsSection) {
+                    resultsSection.classList.remove("results-updated");
+                    void resultsSection.offsetWidth; // Forzar reflow
+                    resultsSection.classList.add("results-updated");
+                }
+
             } catch (error) {
                 console.error("Error al procesar el análisis:", error);
+                showStatusBanner("error", `No fue posible completar el análisis: ${error.message || "Error de conexión con el servicio."}`);
             } finally {
                 submitBtn.disabled = false;
                 submitBtnText.textContent = "Analizar contenido";
@@ -1433,7 +1606,7 @@
             const values = [];
             const colors = [];
 
-            // Tomar hasta 3 impulsores y 3 fricciones
+            // Tomar hasta 3 fricciones y 3 impulsores
             friccion.slice(0, 3).forEach(item => {
                 labels.push(item.nombre_comercial || item.caracteristica);
                 values.push(item.impacto);

@@ -35,6 +35,7 @@ from src.features import (
     extract_text_features,
     extract_visual_features,
 )
+from src.ingestion import ingest_audio_url
 from src.models.virality_explainer import DEFAULT_MODEL_PATH, ViralityExplainer
 
 app = FastAPI(
@@ -208,12 +209,13 @@ async def predict_virality(
     request: Request,
     imagen: Optional[UploadFile] = File(None),
     audio: Optional[UploadFile] = File(None),
+    audio_url: Optional[str] = Form(None),
     texto: Optional[str] = Form(None),
     preset: Optional[str] = Form(None),
 ):
     """
     Evalua el potencial de viralidad de una pieza de contenido multimodal.
-    Recibe imagen de portada, pista de audio, copy o preset comercial rapido.
+    Recibe imagen de portada, pista de audio (archivo o enlace), copy o preset comercial rapido.
     Garantiza almacenamiento efimero y limpieza estricta en bloque finally.
     """
     t0 = time.time()
@@ -227,14 +229,20 @@ async def predict_virality(
             if isinstance(body, dict):
                 preset = body.get("preset", preset)
                 texto = body.get("texto") or body.get("text", texto)
+                audio_url = body.get("audio_url", audio_url)
         except Exception:
             pass
 
     try:
         explainer = get_explainer()
         features_dict: Dict[str, Any] = {}
-        origen_info: str = "directo"
+        origen_info: str = "publicidad_personalizada"
         text_content: str = ""
+        componentes_analizados: List[str] = []
+
+        # Deseleccion o preset nulo/vacio
+        if preset and str(preset).lower().strip() in ("", "none", "null", "personalizado", "custom"):
+            preset = None
 
         # Normalizacion de alias de presets
         if preset:
@@ -247,6 +255,7 @@ async def predict_virality(
                 features_dict = preset_data["features"].copy()
                 origen_info = f"preset_{normalized_preset}"
                 text_content = str(features_dict.get("text_raw", ""))
+                componentes_analizados.append("preset")
 
         # Carga de imagen para extraccion visual
         if imagen is not None and imagen.filename:
@@ -259,9 +268,14 @@ async def predict_virality(
 
                 visual_extracted = extract_visual_features(temp_img_path)
                 features_dict.update(visual_extracted)
-                origen_info = "archivo_multimodal"
+                componentes_analizados.append("imagen")
+                if "preset" in componentes_analizados:
+                    componentes_analizados.remove("preset")
+                    origen_info = "publicidad_personalizada"
+        elif not preset:
+            features_dict.update(extract_visual_features(None))
 
-        # Carga de pista de audio para extraccion acustica
+        # Carga de pista de audio para extraccion acustica (archivo subido o enlace)
         if audio is not None and audio.filename:
             raw_bytes = await audio.read()
             if len(raw_bytes) > 0:
@@ -272,7 +286,27 @@ async def predict_virality(
 
                 audio_extracted = extract_audio_features(temp_audio_path)
                 features_dict.update(audio_extracted)
-                origen_info = "archivo_multimodal"
+                componentes_analizados.append("audio")
+                if "preset" in componentes_analizados:
+                    componentes_analizados.remove("preset")
+                    origen_info = "publicidad_personalizada"
+        elif audio_url is not None and audio_url.strip():
+            downloaded_audio = ingest_audio_url(audio_url.strip(), TEMP_UPLOADS_DIR)
+            if downloaded_audio and downloaded_audio.exists():
+                temp_files_to_clean.append(downloaded_audio)
+                audio_extracted = extract_audio_features(downloaded_audio)
+                features_dict.update(audio_extracted)
+                componentes_analizados.append("audio_url")
+                if "preset" in componentes_analizados:
+                    componentes_analizados.remove("preset")
+                    origen_info = "publicidad_personalizada"
+            else:
+                logger.warning("No se pudo obtener el audio desde el enlace provisto: %s. Aplicando valores neutrales.", audio_url)
+                audio_extracted = extract_audio_features(None)
+                features_dict.update(audio_extracted)
+                componentes_analizados.append("audio_url_fallback")
+        elif not preset:
+            features_dict.update(extract_audio_features(None))
 
         # Copy o texto provisto directamente
         if texto is not None and texto.strip():
@@ -280,16 +314,20 @@ async def predict_virality(
             text_extracted = extract_text_features(text_content)
             features_dict.update(text_extracted)
             features_dict["text_raw"] = text_content
-            origen_info = "texto_directo" if origen_info == "directo" else origen_info
+            componentes_analizados.append("texto")
+            if "preset" in componentes_analizados:
+                componentes_analizados.remove("preset")
+                origen_info = "publicidad_personalizada"
+        elif not preset:
+            features_dict.update(extract_text_features(""))
+            features_dict["text_raw"] = ""
 
-        # Si no se suministraron archivos ni preset ni texto, usar preset campana_comercial por defecto
-        if not features_dict:
-            default_preset = PRESETS["campana_comercial"]
-            features_dict = default_preset["features"].copy()
-            origen_info = "preset_campana_comercial"
-            text_content = str(features_dict.get("text_raw", ""))
+        # Si no se suministraron archivos ni preset ni texto, usar valores base
+        if not preset and not any(k in componentes_analizados for k in ["imagen", "audio", "audio_url", "texto"]):
+            origen_info = "publicidad_personalizada"
+            componentes_analizados.append("configuracion_base")
 
-        # Si no hay texto definido todavia, asegurar campo text_raw
+        # Asegurar campo text_raw en features_dict
         if "text_raw" not in features_dict:
             features_dict["text_raw"] = text_content
 
@@ -332,6 +370,8 @@ async def predict_virality(
             "recommendations": recomendaciones,
             "metadata": {
                 "origen": origen_info,
+                "componentes_analizados": componentes_analizados,
+                "componentes": ", ".join(componentes_analizados) if componentes_analizados else "publicidad_personalizada",
                 "texto_analizado": features_dict.get("text_raw", ""),
                 "tiempo_procesamiento_ms": elapsed_ms,
             },
@@ -364,4 +404,4 @@ else:
 if __name__ == "__main__":
     import uvicorn
     logger.info("Iniciando SonixPulse AI en http://127.0.0.1:8000")
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run("src.api.main:app", host="127.0.0.1", port=8000, reload=True)
