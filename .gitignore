@@ -23,7 +23,9 @@ models/*.pkl
 
 # Datos generados y datasets
 data/processed/
+data/processed/*.csv
 data/temp/
+temp_uploads/
 *.csv
 
 # Archivos multimedia temporales de yt-dlp y ffmpeg

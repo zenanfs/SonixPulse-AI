@@ -1,23 +1,23 @@
-#!/usr/bin/env python3
 """
-SonixPulse AI - Multimodal Virality Ingestion & SHAP Explainability API (Phase 5)
-================================================================================
-Servidor FastAPI de alto rendimiento para predicción de viralidad P90 y explicabilidad
-multimodal mediante SHAP TreeExplainer y modelos XGBoost calibrados.
+SonixPulse AI - Predictor de Exito de Contenido (Fase 4)
+Servicio API REST para evaluacion multimodal y diagnostico de impacto comercial
+mediante arboles de decision calibrados y explicabilidad marginal SHAP.
 
 Endpoints:
-- GET  /api/health: Diagnóstico de salud, versión 3.0.0-beta y estado del modelo.
-- POST /api/predict-virality: Inferencia multimodal vía URL (YouTube/TikTok), presets rápidos o texto crudo.
-- Servidor estático montado en la raíz '/' sirviendo el dashboard web interactivo.
+- GET  /api/health: Estado del servicio y disponibilidad del modelo predictivo.
+- POST /api/predict-virality: Inferencia multimodal mediante carga de archivos y presets.
+- Servidor de archivos estaticos montado en '/' para el panel de control web.
 """
 
-import sys
-import os
 import logging
+import os
+import sys
+import time
+import uuid
 from pathlib import Path
-from typing import Dict, Any, Optional, List
+from typing import Any, Dict, List, Optional
 
-# Garantizar path del proyecto en sys.path
+# Garantizar ruta base del proyecto en sys.path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
@@ -25,28 +25,24 @@ if str(PROJECT_ROOT) not in sys.path:
 logging.basicConfig(level=logging.INFO, format="[%(asctime)s] [%(levelname)s] %(message)s")
 logger = logging.getLogger("SonixPulse.API")
 
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel, Field
 
-from src.models.virality_explainer import ViralityExplainer, DEFAULT_MODEL_PATH
-from src.ingestion.multimodal_ingestion import ingest_url
 from src.features import (
-    extract_visual_features,
+    ALL_CONTINUOUS_FEATURE_NAMES,
     extract_audio_features,
     extract_text_features,
-    ALL_CONTINUOUS_FEATURE_NAMES,
+    extract_visual_features,
 )
+from src.models.virality_explainer import DEFAULT_MODEL_PATH, ViralityExplainer
 
-# Inicialización de la aplicación FastAPI
 app = FastAPI(
-    title="SonixPulse AI - Multimodal Virality Predictor",
-    description="Motor de predicción e interpretabilidad SHAP de viralidad P90 para contenido multimedia.",
-    version="3.0.0-beta",
+    title="SonixPulse AI - Predictor de Exito de Contenido",
+    description="Motor de diagnostico comercial y evaluacion multimodal de viralidad P90.",
+    version="3.0.0-comercial",
 )
 
-# Configuración de CORS para soporte web local y clientes externos
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -55,147 +51,137 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Singleton global para ViralityExplainer
+TEMP_UPLOADS_DIR = PROJECT_ROOT / "temp_uploads"
+TEMP_UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
+
 _EXPLAINER: Optional[ViralityExplainer] = None
 
 
 def get_explainer() -> ViralityExplainer:
-    """Retorna una instancia única en memoria del explicador SHAP."""
+    """Retorna la instancia unica en memoria del explicador comercial."""
     global _EXPLAINER
     if _EXPLAINER is None:
-        logger.info("Cargando modelo virality_xgb_model.joblib e inicializando ViralityExplainer...")
+        logger.info("Cargando modelo virality_xgb_model.joblib e inicializando explicador...")
         _EXPLAINER = ViralityExplainer()
     return _EXPLAINER
 
 
-# Definición de presets heurísticos y sintéticos calibrados
+# Presets comerciales representativos calibrados con la distribucion P90
 PRESETS: Dict[str, Dict[str, Any]] = {
-    "viral_hit": {
-        "title": "Preset: Hit Viral de Alto Impacto (TikTok/Reels)",
+    "campana_comercial": {
+        "nombre": "Campana Comercial",
+        "descripcion": "Anuncio publicitario de alto impacto con balance visual y mensaje directo",
         "features": {
-            "visual_brightness_mean": 155.0,
-            "visual_contrast_rms": 82.0,
-            "visual_color_entropy": 6.9,
-            "visual_saturation_mean": 145.0,
-            "visual_canny_edge_density": 0.14,
+            "visual_brightness_mean": 133.85,
+            "visual_contrast_rms": 54.49,
+            "visual_color_entropy": 4.79,
+            "visual_saturation_mean": 43.59,
+            "visual_canny_edge_density": 0.04,
+            "audio_rms_mean": 0.11,
+            "audio_zcr_mean": 0.07,
+            "audio_bpm_tempo": 116.02,
+            "audio_bpm": 116.02,
+            "audio_mfcc_1": -194.8,
+            "audio_mfcc_2": 94.83,
+            "audio_mfcc_3": -39.4,
+            "audio_mfcc_4": 17.8,
+            "audio_mfcc_5": -18.49,
+            "audio_mfcc_6": 13.09,
+            "audio_mfcc_7": 2.13,
+            "audio_mfcc_8": 5.53,
+            "audio_mfcc_9": 5.31,
+            "audio_mfcc_10": 9.85,
+            "audio_mfcc_11": 3.83,
+            "audio_mfcc_12": -10.31,
+            "audio_mfcc_13": 5.95,
+            "text_inflesz_score": 71.24,
+            "text_fernandez_huerta_score": 75.62,
+            "text_vader_compound": 0.45,
+            "text_vader_pos": 0.32,
+            "text_word_count": 11.0,
+            "text_raw": "Lanzamiento exclusivo de temporada: maximiza tu rendimiento con diseno de vanguardia.",
+        },
+    },
+    "hit_ritmico": {
+        "nombre": "Hit Ritmico",
+        "descripcion": "Pista musical de alto dinamismo con tempo energizante y gancho percusivo",
+        "features": {
+            "visual_brightness_mean": 123.15,
+            "visual_contrast_rms": 34.5,
+            "visual_color_entropy": 5.92,
+            "visual_saturation_mean": 107.24,
+            "visual_canny_edge_density": 0.09,
             "audio_rms_mean": 0.22,
+            "audio_zcr_mean": 0.07,
+            "audio_bpm_tempo": 124.0,
+            "audio_bpm": 124.0,
+            "audio_mfcc_1": -101.97,
+            "audio_mfcc_2": 113.12,
+            "audio_mfcc_3": -21.83,
+            "audio_mfcc_4": 21.41,
+            "audio_mfcc_5": -4.68,
+            "audio_mfcc_6": -7.21,
+            "audio_mfcc_7": -14.51,
+            "audio_mfcc_8": 3.71,
+            "audio_mfcc_9": -2.83,
+            "audio_mfcc_10": 4.85,
+            "audio_mfcc_11": -2.75,
+            "audio_mfcc_12": 9.86,
+            "audio_mfcc_13": -2.67,
+            "text_inflesz_score": 75.0,
+            "text_fernandez_huerta_score": 78.0,
+            "text_vader_compound": 0.65,
+            "text_vader_pos": 0.40,
+            "text_word_count": 11.0,
+            "text_raw": "El beat mas pegadizo del momento con ritmo arrollador para bailar sin parar.",
+        },
+    },
+    "podcast_conversacional": {
+        "nombre": "Podcast Conversacional",
+        "descripcion": "Episodio de dialogo analitico con ritmo sosegado y estructura explicativa",
+        "features": {
+            "visual_brightness_mean": 140.53,
+            "visual_contrast_rms": 59.4,
+            "visual_color_entropy": 5.17,
+            "visual_saturation_mean": 109.52,
+            "visual_canny_edge_density": 0.04,
+            "audio_rms_mean": 0.1,
             "audio_zcr_mean": 0.08,
-            "audio_bpm_tempo": 128.0,
-            "audio_mfcc_1": -120.0,
-            "audio_mfcc_2": 118.0,
-            "audio_mfcc_3": -10.0,
-            "audio_mfcc_4": 30.0,
-            "audio_mfcc_5": 2.0,
-            "audio_mfcc_6": 15.0,
-            "audio_mfcc_7": -5.0,
-            "audio_mfcc_8": 8.0,
-            "audio_mfcc_9": -2.0,
-            "audio_mfcc_10": 4.0,
-            "audio_mfcc_11": -1.0,
-            "audio_mfcc_12": 2.0,
-            "audio_mfcc_13": -0.5,
-            "text_inflesz_score": 78.0,
-            "text_fernandez_huerta_score": 82.0,
-            "text_vader_compound": 0.88,
-            "text_word_count": 12.0,
-            "text_raw": "¡Alerta de temazo! La canción que va a dominar el verano en todas las discos #viral #trending",
-        },
-    },
-    "podcast": {
-        "title": "Preset: Podcast Conversacional / Entrevista Técnica",
-        "features": {
-            "visual_brightness_mean": 115.0,
-            "visual_contrast_rms": 36.0,
-            "visual_color_entropy": 4.6,
-            "visual_saturation_mean": 48.0,
-            "visual_canny_edge_density": 0.03,
-            "audio_rms_mean": 0.05,
-            "audio_zcr_mean": 0.035,
-            "audio_bpm_tempo": 90.0,
-            "audio_mfcc_1": -210.0,
-            "audio_mfcc_2": 70.0,
-            "audio_mfcc_3": -25.0,
-            "audio_mfcc_4": 15.0,
-            "audio_mfcc_5": -10.0,
-            "audio_mfcc_6": 8.0,
-            "audio_mfcc_7": -12.0,
-            "audio_mfcc_8": 3.0,
-            "audio_mfcc_9": -8.0,
-            "audio_mfcc_10": 1.0,
-            "audio_mfcc_11": -4.0,
-            "audio_mfcc_12": 0.5,
-            "audio_mfcc_13": -2.0,
-            "text_inflesz_score": 88.0,
-            "text_fernandez_huerta_score": 85.0,
-            "text_vader_compound": 0.15,
-            "text_word_count": 28.0,
-            "text_raw": "Lectura continua y análisis técnico sobre neurociencia cognitiva y hábitos diarios en el estudio.",
-        },
-    },
-    "indie_melancholic": {
-        "title": "Preset: Música Indie Melancólica / Balada Lofi",
-        "features": {
-            "visual_brightness_mean": 88.0,
-            "visual_contrast_rms": 28.0,
-            "visual_color_entropy": 4.1,
-            "visual_saturation_mean": 38.0,
-            "visual_canny_edge_density": 0.025,
-            "audio_rms_mean": 0.04,
-            "audio_zcr_mean": 0.028,
-            "audio_bpm_tempo": 80.0,
-            "audio_mfcc_1": -240.0,
-            "audio_mfcc_2": 60.0,
-            "audio_mfcc_3": -30.0,
-            "audio_mfcc_4": 10.0,
-            "audio_mfcc_5": -12.0,
-            "audio_mfcc_6": 5.0,
-            "audio_mfcc_7": -15.0,
-            "audio_mfcc_8": 2.0,
-            "audio_mfcc_9": -10.0,
-            "audio_mfcc_10": 0.5,
-            "audio_mfcc_11": -5.0,
-            "audio_mfcc_12": 0.2,
-            "audio_mfcc_13": -3.0,
-            "text_inflesz_score": 52.0,
-            "text_fernandez_huerta_score": 50.0,
-            "text_vader_compound": -0.42,
-            "text_word_count": 18.0,
-            "text_raw": "Lluvia silenciosa y recuerdos solitarios en una noche fría sin rumbo ni despedidas.",
+            "audio_bpm_tempo": 95.0,
+            "audio_bpm": 95.0,
+            "audio_mfcc_1": -199.64,
+            "audio_mfcc_2": 120.94,
+            "audio_mfcc_3": -29.69,
+            "audio_mfcc_4": 22.55,
+            "audio_mfcc_5": 0.72,
+            "audio_mfcc_6": -2.4,
+            "audio_mfcc_7": -7.4,
+            "audio_mfcc_8": 13.37,
+            "audio_mfcc_9": 4.79,
+            "audio_mfcc_10": 10.84,
+            "audio_mfcc_11": -2.5,
+            "audio_mfcc_12": 1.01,
+            "audio_mfcc_13": -2.96,
+            "text_inflesz_score": 41.09,
+            "text_fernandez_huerta_score": 46.64,
+            "text_vader_compound": 0.0,
+            "text_vader_pos": 0.10,
+            "text_word_count": 10.0,
+            "text_raw": "Episodio especial: analisis en profundidad sobre habitos, productividad y reflexion diaria.",
         },
     },
 }
 
-
-# =====================================================================
-# MODELOS PYDANTIC PARA REQUEST Y RESPONSE
-# =====================================================================
-
-class ViralityPredictRequest(BaseModel):
-    url: Optional[str] = Field(None, description="URL pública de YouTube, Shorts, TikTok, etc.")
-    text: Optional[str] = Field(None, description="Texto o guión del contenido para extracción lingüística.")
-    preset: Optional[str] = Field(None, description="Preset rápido: 'viral_hit', 'podcast', 'indie_melancholic'")
-    features: Optional[Dict[str, Any]] = Field(None, description="Diccionario opcional con características ya calculadas.")
+PRESET_ALIASES: Dict[str, str] = {
+    "viral_hit": "hit_ritmico",
+    "podcast": "podcast_conversacional",
+    "indie_melancholic": "podcast_conversacional",
+}
 
 
-class HealthResponse(BaseModel):
-    status: str
-    service: str
-    version: str
-    model_loaded: bool
-    model_artifact: str
-    model_path: str
-    features_count: int
-    p90_calibrated: bool
-
-
-# =====================================================================
-# ENDPOINTS REST DE LA API
-# =====================================================================
-
-@app.get("/api/health", response_model=HealthResponse)
+@app.get("/api/health")
 def health_check():
-    """Diagnóstico de salud del servicio y verificación del modelo de viralidad."""
-    model_path_exists = DEFAULT_MODEL_PATH.exists()
+    """Diagnostico de salud del servicio y disponibilidad del modelo predictivo."""
     model_loaded = False
     try:
         expl = get_explainer()
@@ -205,137 +191,177 @@ def health_check():
 
     return {
         "status": "healthy" if model_loaded else "degraded",
-        "service": "SonixPulse AI Multimodal Virality Engine",
-        "version": "3.0.0-beta",
+        "estado": "operativo" if model_loaded else "degradado",
+        "servicio": "SonixPulse AI Predictor de Exito de Contenido",
+        "service": "SonixPulse AI Predictor de Exito de Contenido",
+        "version": "3.0.0-comercial",
+        "modelo_cargado": model_loaded,
         "model_loaded": model_loaded,
-        "model_artifact": DEFAULT_MODEL_PATH.name,
-        "model_path": str(DEFAULT_MODEL_PATH),
-        "features_count": len(ALL_CONTINUOUS_FEATURE_NAMES),
-        "p90_calibrated": True,
+        "artefacto_modelo": DEFAULT_MODEL_PATH.name,
+        "variables_multimodales": len(ALL_CONTINUOUS_FEATURE_NAMES),
+        "calibracion_p90": True,
     }
 
 
 @app.post("/api/predict-virality")
-def predict_virality(req: ViralityPredictRequest):
+async def predict_virality(
+    request: Request,
+    imagen: Optional[UploadFile] = File(None),
+    audio: Optional[UploadFile] = File(None),
+    texto: Optional[str] = Form(None),
+    preset: Optional[str] = Form(None),
+):
     """
-    Infiere la probabilidad de pertenecer al P90 viral y computa la interpretabilidad SHAP.
-    Soporta URLs públicas, presets predefinidos o análisis textual.
+    Evalua el potencial de viralidad de una pieza de contenido multimodal.
+    Recibe imagen de portada, pista de audio, copy o preset comercial rapido.
+    Garantiza almacenamiento efimero y limpieza estricta en bloque finally.
     """
+    t0 = time.time()
+    temp_files_to_clean: List[Path] = []
+
+    # Compatibilidad con clientes que envian JSON
+    content_type = request.headers.get("content-type", "")
+    if "application/json" in content_type:
+        try:
+            body = await request.json()
+            if isinstance(body, dict):
+                preset = body.get("preset", preset)
+                texto = body.get("texto") or body.get("text", texto)
+        except Exception:
+            pass
+
     try:
         explainer = get_explainer()
-        fallback_applied = False
-        fallback_reason: Optional[str] = None
-        target_url: Optional[str] = req.url
-        metadata: Dict[str, Any] = {}
         features_dict: Dict[str, Any] = {}
+        origen_info: str = "directo"
+        text_content: str = ""
 
-        # 1. Caso A: Preset preconfigurado
-        if req.preset and req.preset.lower() in PRESETS:
-            preset_key = req.preset.lower()
-            preset_data = PRESETS[preset_key]
-            features_dict = preset_data["features"]
-            metadata = {
-                "title": preset_data["title"],
-                "preset": preset_key,
-                "source": "preset_simulator",
-            }
-            target_url = f"preset://{preset_key}"
+        # Normalizacion de alias de presets
+        if preset:
+            normalized_preset = preset.lower().strip()
+            if normalized_preset in PRESET_ALIASES:
+                normalized_preset = PRESET_ALIASES[normalized_preset]
 
-        # 2. Caso B: Ingesta desde URL pública
-        elif req.url and req.url.strip():
-            clean_url = req.url.strip()
-            logger.info("Procesando ingesta multimodal para URL: %s", clean_url)
-            ingest_result = ingest_url(clean_url)
+            if normalized_preset in PRESETS:
+                preset_data = PRESETS[normalized_preset]
+                features_dict = preset_data["features"].copy()
+                origen_info = f"preset_{normalized_preset}"
+                text_content = str(features_dict.get("text_raw", ""))
 
-            features_dict = ingest_result.get("features", {})
-            metadata = ingest_result.get("metadata", {})
-            fallback_applied = metadata.get("fallback_applied", False)
-            fallback_reason = metadata.get("fallback_reason")
-            target_url = clean_url
+        # Carga de imagen para extraccion visual
+        if imagen is not None and imagen.filename:
+            raw_bytes = await imagen.read()
+            if len(raw_bytes) > 0:
+                ext = Path(imagen.filename).suffix or ".jpg"
+                temp_img_path = TEMP_UPLOADS_DIR / f"img_{uuid.uuid4().hex}{ext}"
+                temp_img_path.write_bytes(raw_bytes)
+                temp_files_to_clean.append(temp_img_path)
 
-        # 3. Caso C: Características suministradas directamente
-        elif req.features and isinstance(req.features, dict):
-            features_dict = req.features
-            metadata = {
-                "title": "Vector de Características Directo",
-                "source": "custom_features",
-            }
-            target_url = "custom://features"
+                visual_extracted = extract_visual_features(temp_img_path)
+                features_dict.update(visual_extracted)
+                origen_info = "archivo_multimodal"
 
-        # 4. Caso D: Texto o Guión libre
-        elif req.text and req.text.strip():
-            raw_text = req.text.strip()
-            text_feats = extract_text_features(raw_text)
-            visual_feats = extract_visual_features(None)
-            audio_feats = extract_audio_features(None)
+        # Carga de pista de audio para extraccion acustica
+        if audio is not None and audio.filename:
+            raw_bytes = await audio.read()
+            if len(raw_bytes) > 0:
+                ext = Path(audio.filename).suffix or ".mp3"
+                temp_audio_path = TEMP_UPLOADS_DIR / f"audio_{uuid.uuid4().hex}{ext}"
+                temp_audio_path.write_bytes(raw_bytes)
+                temp_files_to_clean.append(temp_audio_path)
 
-            features_dict = {
-                **visual_feats,
-                **audio_feats,
-                **text_feats,
-                "text_raw": raw_text,
-            }
-            metadata = {
-                "title": raw_text[:50] + ("..." if len(raw_text) > 50 else ""),
-                "source": "raw_text_input",
-            }
-            target_url = "raw://text"
+                audio_extracted = extract_audio_features(temp_audio_path)
+                features_dict.update(audio_extracted)
+                origen_info = "archivo_multimodal"
 
-        # 5. Fallback por defecto: Viral Hit
-        else:
-            preset_data = PRESETS["viral_hit"]
-            features_dict = preset_data["features"]
-            metadata = {
-                "title": "Preset Predeterminado (Viral Hit)",
-                "source": "default_preset",
-            }
-            target_url = "preset://viral_hit"
+        # Copy o texto provisto directamente
+        if texto is not None and texto.strip():
+            text_content = texto.strip()
+            text_extracted = extract_text_features(text_content)
+            features_dict.update(text_extracted)
+            features_dict["text_raw"] = text_content
+            origen_info = "texto_directo" if origen_info == "directo" else origen_info
 
-        # Ejecución de la inferencia y cálculo de SHAP
+        # Si no se suministraron archivos ni preset ni texto, usar preset campana_comercial por defecto
+        if not features_dict:
+            default_preset = PRESETS["campana_comercial"]
+            features_dict = default_preset["features"].copy()
+            origen_info = "preset_campana_comercial"
+            text_content = str(features_dict.get("text_raw", ""))
+
+        # Si no hay texto definido todavia, asegurar campo text_raw
+        if "text_raw" not in features_dict:
+            features_dict["text_raw"] = text_content
+
+        # Ejecucion de la inferencia SHAP comercial
         explanation = explainer.explain_prediction(features_dict)
 
-        probability = float(explanation["probability"])
-        probability_percentage = round(probability * 100.0, 1)
-        is_viral_p90 = bool(explanation["is_viral_p90"])
-        radar_scores = explanation.get("radar_scores", {"visual": 50.0, "acoustic": 50.0, "textual": 50.0})
-        top_positive_factors = explanation.get("top_positive_factors", [])
-        top_negative_factors = explanation.get("top_negative_factors", [])
-        recommendations = explanation.get("recommendations", [])
+        probability = float(explanation["probabilidad"])
+        prob_pct = round(probability * 100.0, 1)
+        is_viral = bool(explanation["es_viral_p90"])
+        radar_comercial = explanation.get("radar_comercial", {})
+        factores_impulso = explanation.get("factores_impulso", [])
+        factores_friccion = explanation.get("factores_friccion", [])
+
+        # Sintesis de recomendaciones de negocio orientadas a marketing
+        recomendaciones: List[str] = []
+        for factor in factores_friccion[:3]:
+            recomendaciones.append(factor["recomendacion"])
+        for factor in factores_impulso[:2]:
+            recomendaciones.append(factor["recomendacion"])
+
+        elapsed_ms = round((time.time() - t0) * 1000, 1)
 
         return {
+            # Payload comercial de Fase 4
+            "exito": True,
+            "probabilidad": probability,
+            "probabilidad_porcentaje": prob_pct,
+            "es_viral_p90": is_viral,
+            "radar_comercial": radar_comercial,
+            "factores_impulso": factores_impulso,
+            "factores_friccion": factores_friccion,
+            "recomendaciones": recomendaciones,
+            # Campos para compatibilidad con suites de pruebas
             "success": True,
-            "url": target_url,
-            "metadata": metadata,
             "probability": probability,
-            "probability_percentage": probability_percentage,
-            "is_viral_p90": is_viral_p90,
-            "radar_scores": radar_scores,
-            "top_positive_factors": top_positive_factors,
-            "top_negative_factors": top_negative_factors,
-            "recommendations": recommendations,
-            "fallback_applied": fallback_applied,
-            "fallback_reason": fallback_reason,
+            "probability_percentage": prob_pct,
+            "radar_scores": explanation.get("radar_scores", {}),
+            "top_positive_factors": explanation.get("top_positive_factors", []),
+            "top_negative_factors": explanation.get("top_negative_factors", []),
+            "recommendations": recomendaciones,
+            "metadata": {
+                "origen": origen_info,
+                "texto_analizado": features_dict.get("text_raw", ""),
+                "tiempo_procesamiento_ms": elapsed_ms,
+            },
         }
 
     except Exception as exc:
-        logger.error("Error en /api/predict-virality: %s", exc, exc_info=True)
+        logger.error("Error durante evaluacion de viralidad: %s", exc, exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Error en inferencia multimodal: {str(exc)}",
+            detail=f"Error en diagnostico multimodal: {str(exc)}",
         )
+    finally:
+        # Eliminacion inmediata de archivos temporales
+        for temp_file in temp_files_to_clean:
+            try:
+                if temp_file.exists():
+                    temp_file.unlink()
+            except Exception as clean_err:
+                logger.warning("No se pudo eliminar archivo temporal %s: %s", temp_file, clean_err)
 
 
-# =====================================================================
-# MONTAJE ESTÁTICO DEL FRONTEND
-# =====================================================================
+# Montaje estatico del Frontend
 web_dir = PROJECT_ROOT / "web"
 if web_dir.exists() and web_dir.is_dir():
     app.mount("/", StaticFiles(directory=str(web_dir), html=True), name="static")
 else:
-    logger.warning("Directorio 'web/' no encontrado en %s. No se montó frontend estático.", web_dir)
+    logger.warning("Directorio web/ no encontrado en %s.", web_dir)
 
 
 if __name__ == "__main__":
     import uvicorn
-    logger.info("Iniciando SonixPulse AI Virality REST Engine en http://127.0.0.1:8000")
+    logger.info("Iniciando SonixPulse AI en http://127.0.0.1:8000")
     uvicorn.run(app, host="127.0.0.1", port=8000)

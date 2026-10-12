@@ -40,6 +40,10 @@ from src.features import (
     FEATURE_NAMES_AUDIO,
     FEATURE_NAMES_TEXT,
 )
+from src.models.commercial_translator import (
+    compute_commercial_radar,
+    format_commercial_factors,
+)
 
 logger = logging.getLogger("SonixPulse.ViralityExplainer")
 DEFAULT_MODEL_PATH = PROJECT_ROOT / "models" / "virality_xgb_model.joblib"
@@ -300,8 +304,27 @@ class ViralityExplainer:
             "textual": _calc_axis_score(textual_shap_sum),
         }
 
+        # Calculo de Radar Comercial de 5 Ejes y Factores de Negocio
+        radar_comercial = compute_commercial_radar(features_dict)
+        factores_dict = format_commercial_factors(
+            contributions_list,
+            features_dict=features_dict,
+            top_n=5,
+        )
+        factores_impulso = factores_dict["factores_impulso"]
+        factores_friccion = factores_dict["factores_friccion"]
+
+        prob_rounded = round(probability, 4)
+
         return {
-            "probability": round(probability, 4),
+            # Especificacion comercial de Fase 3
+            "probabilidad": prob_rounded,
+            "es_viral_p90": is_viral,
+            "radar_comercial": radar_comercial,
+            "factores_impulso": factores_impulso,
+            "factores_friccion": factores_friccion,
+            # Compatibilidad con API y versiones previas
+            "probability": prob_rounded,
             "is_viral_p90": is_viral,
             "top_positive_factors": top_positive,
             "top_negative_factors": top_negative,

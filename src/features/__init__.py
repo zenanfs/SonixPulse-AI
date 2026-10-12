@@ -1,10 +1,9 @@
 """
 SonixPulse AI - Multimodal Feature Extraction Package
-=====================================================
-Módulos deterministas y vectorizados de extracción de características en CPU:
-- extract_visual_features: Métricas visuales de brillo, contraste, entropía, saturación y Canny.
-- extract_audio_features: Métricas acústicas de RMS, cruces por cero, tempo BPM y 13 coeficientes MFCC.
-- extract_text_features: Métricas lingüísticas de legibilidad (INFLESZ, Fernández-Huerta) y sentimiento VADER.
+Modulos deterministas y vectorizados de extraccion de caracteristicas en CPU:
+- extract_visual_features: Metricas visuales de brillo, contraste, entropia, saturacion y Canny.
+- extract_audio_features: Metricas acusticas de RMS, cruces por cero, tempo BPM y 13 coeficientes MFCC.
+- extract_text_features: Metricas linguisticas de legibilidad (INFLESZ, Fernandez-Huerta) y sentimiento VADER.
 """
 
 from src.features.visual_extractor import (
@@ -23,7 +22,6 @@ from src.features.text_extractor import (
     FEATURE_NAMES_TEXT,
 )
 
-# Lista unificada de todas las características continuas (para normalización con StandardScaler)
 ALL_CONTINUOUS_FEATURE_NAMES = (
     FEATURE_NAMES_VISUAL + FEATURE_NAMES_AUDIO + FEATURE_NAMES_TEXT
 )

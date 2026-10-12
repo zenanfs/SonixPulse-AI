@@ -234,7 +234,7 @@ def build_multimodal_dataset(
 
     p90_threshold = float(np.percentile(latent_virality_score, 90.0))
     logger.info(
-        "Calibración P90 completada: Umbral P90 = %.4f | Positivos (1): %d (%.1f%%) | Negativos (0): %d (%.1f%%)",
+        "Calibracion P90 completada: Umbral P90 = %.4f | Positivos (1): %d (%.1f%%) | Negativos (0): %d (%.1f%%)",
         p90_threshold,
         k_positives,
         (k_positives / n_samples) * 100.0,
@@ -304,15 +304,13 @@ if __name__ == "__main__":
         format="[%(asctime)s] [%(levelname)s] %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S",
     )
-    print("=" * 60)
-    print("SonixPulse AI - Generando Multimodal Master Dataset (Calibración P90)")
-    print("=" * 60)
+    print("SonixPulse AI: Generando Multimodal Master Dataset (Calibracion P90)")
 
     dataset = build_multimodal_dataset(n_samples=200, seed=42)
 
-    print(f"\n[OK] Filas totales generadas: {len(dataset)}")
-    print(f"[OK] Columnas totales: {len(dataset.columns)}")
-    print(f"[OK] Variables numéricas continuas ({len(ALL_CONTINUOUS_FEATURE_NAMES)}):")
+    print(f"Filas totales generadas: {len(dataset)}")
+    print(f"Columnas totales: {len(dataset.columns)}")
+    print(f"Variables numericas continuas ({len(ALL_CONTINUOUS_FEATURE_NAMES)}):")
     for idx, c in enumerate(ALL_CONTINUOUS_FEATURE_NAMES, start=1):
         print(f"  {idx:2d}. {c}")
     print(f"  26. text_raw (tipo: {dataset['text_raw'].dtype})")
@@ -322,10 +320,9 @@ if __name__ == "__main__":
     pos_count = counts.get(1, 0)
     neg_count = counts.get(0, 0)
     total = len(dataset)
-    print("\n[OK] Distribución de Clases Calibrada (P90):")
-    print(f"  Clase 0 (Estándar): {neg_count} muestras ({(neg_count / total) * 100:.1f}%)")
+    print("Distribucion de Clases Calibrada (P90):")
+    print(f"  Clase 0 (Estandar): {neg_count} muestras ({(neg_count / total) * 100:.1f}%)")
     print(f"  Clase 1 (Viral P90): {pos_count} muestras ({(pos_count / total) * 100:.1f}%)")
 
     dest_file = Path("data/processed/multimodal_master_dataset.csv")
-    print(f"\n[OK] Archivo guardado: {dest_file.resolve()} ({dest_file.stat().st_size} bytes)")
-    print("=" * 60)
+    print(f"Archivo guardado: {dest_file.resolve()} ({dest_file.stat().st_size} bytes)")

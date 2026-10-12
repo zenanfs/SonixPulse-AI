@@ -15,6 +15,16 @@ from src.models.virality_classifier import (
 from src.models.virality_explainer import (
     ViralityExplainer,
 )
+from src.models.commercial_translator import (
+    get_commercial_name,
+    compute_commercial_radar,
+    calcular_radar_comercial,
+    generate_business_recommendation,
+    format_commercial_factors,
+    traducir_factores_shap,
+    obtener_nombre_comercial,
+    COMMERCIAL_FEATURE_NAMES,
+)
 from src.models.predictive_model import (
     AcousticTrendPredictor,
 )
@@ -26,6 +36,15 @@ __all__ = [
     "train_virality_model",
     "build_pipeline",
     "ViralityExplainer",
+    "get_commercial_name",
+    "compute_commercial_radar",
+    "calcular_radar_comercial",
+    "generate_business_recommendation",
+    "format_commercial_factors",
+    "traducir_factores_shap",
+    "obtener_nombre_comercial",
+    "COMMERCIAL_FEATURE_NAMES",
     "AcousticTrendPredictor",
     "FinancialROIEngine",
 ]
+
